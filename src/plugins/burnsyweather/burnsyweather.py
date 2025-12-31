@@ -16,19 +16,23 @@ logger = logging.getLogger(__name__)
 class BurnsyWeather(BasePlugin):
 
     def generate_image(self, settings, device_config):
+        lat = float(settings.get('latitude'))
+        long = float(settings.get('longitude'))
+        if not lat or not long:
+            raise RuntimeError("Latitude and Longitude are required.")
         
         # api_key = device_config.load_env_key("OPEN_AI_SECRET")
         # if not api_key:
         #     raise RuntimeError("OPEN AI API Key not configured.")
 
-        title = settings.get("title")
-        if not title:
-            raise RuntimeError("Title is required.")
+        # title = settings.get("title")
+        # if not title:
+        #     raise RuntimeError("Title is required.")
 
         content = self.get_content()
 
         image_template_params = {
-            "title": title,
+            "title": 'MetOffice Weather',
             "content": content,
             "plugin_settings": settings
         }

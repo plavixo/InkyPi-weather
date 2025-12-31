@@ -1,41 +1,74 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 <div class="form-group">
-    <div class="form-group nowrap">
-        <label for="title" class="form-label">Title:</label>
-        <input type="text" id="title" name="title" placeholder="Type something..." required class="form-input">
+    <label class="form-label">Location: </label>
+    <div class="form-group">
+        <span>Latitude </span>
+        <input readonly type="text" id="latitude" name="latitude" class="form-input" />
     </div>
-
-    <!-- Text Model Dropdown
-    <div class="form-group nowrap">
-        <label for="textModel" class="form-label">Text Model:</label>
-        <select id="textModel" name="textModel" class="form-input">
-            <option value="gpt-4o-mini">GPT-4o mini</option>
-            <option value="gpt-4o">GPT-4o</option>
-            <option value="gpt-4.1">GPT-4.1</option>
-            <option value="gpt-4.1-mini">GPT-4.1 mini</option>
-            <option value="gpt-4.1-nano">GPT-4.1 nano</option>
-            <option value="gpt-5">GPT-5</option>
-            <option value="gpt-5-mini">GPT-5 mini</option>
-            <option value="gpt-5-nano">GPT-5 nano</option>
-        </select>
+    <div class="form-group">
+        <span>Longitude </span>
+        <input readonly type="text" id="longitude" name="longitude" class="form-input" />
     </div>
-</div> -->
+    <button type="button" id="openMap" class="action-button compact">Select Location</button>
+</div>
 
-<!-- <div class="form-group">
-    <label for="textPrompt" class="form-label">Text Prompt:</label>
-    <input type="text" id="textPrompt" name="textPrompt" placeholder="Type something..." required class="form-input">
-</div> -->
+<div id="mapModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal('mapModal')">×</span>
+        <h2 id="modalTitle">Select Location</h2>
+        <div class="separator"></div>
+        <div id="map" style="width: 100%; height: 200px; margin: 10px 0px;"></div>
+        <button id="closeMap" class="action-button">Save</button>
+    </div>
+</div>
 
 <script>
 
-    // populate form values from plugin settings
-    document.addEventListener('DOMContentLoaded', () => {        
-        if (loadPluginSettings) {
-            // Populate text inputs
-            document.getElementById('title').value = pluginSettings.title || '';
-            // document.getElementById('textPrompt').value = pluginSettings.textPrompt || '';
-            
-            // Populate text model
-            // document.getElementById('textModel').value = pluginSettings.textModel;
-        }
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const OSM_TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const $latitude = document.querySelector('#latitude');
+        const $longitude = document.querySelector('#longitude');
+        const $openMap = document.querySelector('#openMap');
+        const $mapModal = document.querySelector('#mapModal');
+        const $closeMap = document.querySelector('#closeMap');
+
+        let latitude = +$latitude.value;
+        let longitude = +$longitude.value;
+        let zoom = latitude && longitude ? 4.5 : 2.5;
+        let selectedTitle = 'location';
+        let weatherProvider = 'OpenMeteo';
+
+        let map, marker;
+
+        $openMap.addEventListener('click', () => {
+            openModal('mapModal')
+            setTimeout(() => {
+                if (!map) {
+                    map = L.map('map').setView([latitude, longitude], zoom);
+                    L.tileLayer(OSM_TILE_URL).addTo(map);
+                    marker = L.marker([latitude, longitude], { draggable: true }).addTo(map);
+
+                    map.on('click', event => {
+                        marker.setLatLng(event.latlng);
+                    });
+                }
+            }, 100);
+        });
+
+        $closeMap.addEventListener('click', () => {
+            const position = marker.getLatLng().wrap();
+            $latitude.value = position.lat;
+            $longitude.value = position.lng;
+            closeModal('mapModal');
+        });
+
+        
+        document.getElementById('weatherProvider').value = weatherProvider;
+        document.querySelector(`input[name="titleSelection"][value="${selectedTitle}"]`).checked = true;
+        updateTitleOptions(weatherProvider)
     });
 </script>

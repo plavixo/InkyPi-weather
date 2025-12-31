@@ -43,10 +43,11 @@ class WeatherGetter:
         root = Root.from_dict(jsonstring)
 
         print(f"Root.type: {root.type}")
+        modelRunDate= root.features[0].properties.modelRunDate
 
 
 
-        return f"It's going to be a superb day"
+        return f"The model from Met Office was run at {modelRunDate}."
     
     def get_value_from_json(self, key, sub_key):
 

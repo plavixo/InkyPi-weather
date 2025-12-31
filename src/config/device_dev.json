@@ -1,6 +1,64 @@
 {
     "name": "InkyPi Development",
     "display_type": "mock",
-    "resolution": [800, 480],
-    "orientation": "horizontal"
+    "resolution": [
+        800,
+        480
+    ],
+    "orientation": "horizontal",
+    "playlist_config": {
+        "playlists": [
+            {
+                "name": "Default",
+                "start_time": "00:00",
+                "end_time": "24:00",
+                "plugins": [
+                    {
+                        "plugin_id": "image_upload",
+                        "name": "Fanta",
+                        "plugin_settings": {
+                            "padImage": "true",
+                            "backgroundColor": "#ffffff"
+                        },
+                        "refresh": {
+                            "interval": 180
+                        },
+                        "latest_refresh_time": null
+                    },
+                    {
+                        "plugin_id": "clock",
+                        "name": "Clock",
+                        "plugin_settings": {
+                            "selectedClockFace": "Gradient Clock",
+                            "primaryColor": "#db3246",
+                            "secondaryColor": "#000000"
+                        },
+                        "refresh": {
+                            "interval": 60
+                        },
+                        "latest_refresh_time": null
+                    },
+                    {
+                        "plugin_id": "burnsyweather",
+                        "name": "Weather",
+                        "plugin_settings": {
+                            "title": "Sunny"
+                        },
+                        "refresh": {
+                            "interval": 60
+                        },
+                        "latest_refresh_time": null
+                    }
+                ],
+                "current_plugin_index": null
+            }
+        ],
+        "active_playlist": null
+    },
+    "refresh_info": {
+        "refresh_time": "2025-12-30T12:29:52.090682+00:00",
+        "image_hash": "db264049766907ec9cd361ee3f834fb6e251a4f938a8019a734e1e226acbb02d",
+        "refresh_type": "Manual Update",
+        "plugin_id": "burnsyweather"
+    }
 }

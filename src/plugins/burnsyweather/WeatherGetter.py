@@ -4,6 +4,7 @@ from urllib.request import urlopen
 import json
 import time
 import requests
+from plugins.burnsyweather.Models.MetOffice.SiteSpecific import *
 
 class WeatherGetter:
     base_url = "https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point/"
@@ -38,6 +39,10 @@ class WeatherGetter:
         requestHeaders = {"apikey": api_key}
         outcome = self.retrieve_forecast(self.base_url, timesteps, requestHeaders, latitude, longitude, excludeMetadata, includeLocation)
 
+        jsonstring = json.loads(outcome)
+        root = Root.from_dict(jsonstring)
+
+        print(f"Root.type: {root.type}")
 
 
 
@@ -89,3 +94,5 @@ class WeatherGetter:
         req.encoding = 'utf-8'
 
         print(req.text)
+
+        return req.text

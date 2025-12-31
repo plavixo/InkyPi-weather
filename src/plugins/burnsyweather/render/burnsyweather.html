@@ -3,6 +3,11 @@
 {% block content %}
 <div class="text-content">
   <div class="title">{{ title }}</div>
-  <div class="content">{{ content | safe }}</div>
+  <div class="model_run_time">{{ model_run_time }}</div>
 </div>
+
+<div>
+  <img src="{{ hour_one_weather_symbol }}">
+</div>
+
 {% endblock %}

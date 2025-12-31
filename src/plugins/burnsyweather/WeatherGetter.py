@@ -10,19 +10,7 @@ class WeatherGetter:
     base_url = "https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point/"
 
 
-    def get_content(self):
-     
-        # url = "http://olympus.realpython.org/profiles/aphrodite"
-        # page = urlopen(url)
-        # html_bytes = page.read()
-        # html = html_bytes.decode("utf-8")
-        # title_index = html.find("<title>")
-        # start_index = title_index + len("<title>")
-        # end_index = html.find("</title>")
-        # title = html[start_index:end_index]
-
-        # print(f"Title of the page is: {title}")
-
+    def get_content(self, lat, long):    
         print(self.base_url)
 
         api_key = self.get_value_from_json("MetOffice", "APIKey")
@@ -32,8 +20,8 @@ class WeatherGetter:
         timesteps = "hourly"
         includeLocation = "TRUE"
         excludeMetadata = "FALSE"
-        latitude = "-3.474"
-        longitude = "50.727"
+        latitude = lat
+        longitude = long
  
 
         requestHeaders = {"apikey": api_key}
@@ -47,9 +35,10 @@ class WeatherGetter:
 
 
 
-        return f"The model from Met Office was run at {modelRunDate}."
+        return root
     
     def get_value_from_json(self, key, sub_key):
+        # TODO: Change this to get from static file location which will work with the Pi
 
         print("Getting value from JSON")
 

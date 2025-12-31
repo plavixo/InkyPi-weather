@@ -28,3 +28,27 @@
   white-space: pre-line;
   overflow: hidden;
 }
+
+@media (max-aspect-ratio: 1) {
+  .today-container {
+    flex-direction: column;
+    gap: 1dvh
+  }
+
+  /* Current Weather Row */
+  .current-temperature {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .data-points {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 100%;
+  }
+
+  .data-point {
+    height: 7dvh;
+  }
+
+}

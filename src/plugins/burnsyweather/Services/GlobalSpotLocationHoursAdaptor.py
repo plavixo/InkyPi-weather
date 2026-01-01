@@ -11,16 +11,16 @@ class GlobalSpotLocationHoursAdaptor:
         for i in range(12):
             global_spot_location_hours[f"hour_{i+1}_weather_symbol"] = os.path.join(plugin_dir, 'icons', 'old', f'{timed_series[i].significantWeatherCode}.svg')
             global_spot_location_hours[f"hour_{i+1}_time"] = (datetime.fromisoformat(timed_series[i].time)).strftime('%H:%M')
-            global_spot_location_hours[f"hour_{i+1}_precip"] = timed_series[i].probOfPrecipitation
-            global_spot_location_hours[f"hour_{i+1}_temp"] = timed_series[i].screenTemperature
-            global_spot_location_hours[f"hour_{i+1}_feels"] = timed_series[i].feelsLikeTemperature
+            global_spot_location_hours[f"hour_{i+1}_precip"] = str(timed_series[i].probOfPrecipitation) + '%'
+            global_spot_location_hours[f"hour_{i+1}_temp"] = str(round(timed_series[i].screenTemperature)) + '°C'
+            global_spot_location_hours[f"hour_{i+1}_feels"] = str(round(timed_series[i].feelsLikeTemperature)) + '°C'
             global_spot_location_hours[f"hour_{i+1}_wind_dir"] = timed_series[i].windDirectionFrom10m
-            global_spot_location_hours[f"hour_{i+1}_wind_gust"] = timed_series[i].windGustSpeed10m
+            global_spot_location_hours[f"hour_{i+1}_wind_gust"] = round(timed_series[i].windGustSpeed10m)
             global_spot_location_hours[f"hour_{i+1}_visibility"] = timed_series[i].visibility
-            global_spot_location_hours[f"hour_{i+1}_humidity"] = timed_series[i].screenRelativeHumidity
+            global_spot_location_hours[f"hour_{i+1}_humidity"] = str(round(timed_series[i].screenRelativeHumidity)) + '%'
             global_spot_location_hours[f"hour_{i+1}_uv"] = timed_series[i].uvIndex
         
-        # Debug: Print out the first 12 hours of weather symbols bucause 0 is missing
+        # Debug: Print out the first 12 hours of weather symbols because 0 is missing
         for j in range(12):
             print(f"Signifiant Weather Code for hour {j+1}: ", global_spot_location_hours[f"hour_{j+1}_weather_symbol"])
 

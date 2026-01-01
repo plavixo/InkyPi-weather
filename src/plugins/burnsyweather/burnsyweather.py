@@ -55,8 +55,6 @@ class BurnsyWeather(BasePlugin):
         return image_template_params 
 
 
-
-
     def prepare_standard_params(self, settings, weather_data):
         icon_set = 'old'
         hour_one_weather_symbol = self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')

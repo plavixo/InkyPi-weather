@@ -100,7 +100,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 /* Forecast table styling */
 .forecast-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
 .forecast-table thead th{background:transparent;font-weight:600;padding:6px 8px;text-align:center}
-.forecast-table th,.forecast-table td{border:none;padding:6px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.forecast-table th,.forecast-table td{border:none;padding:6px 8px;overflow:hidden;white-space:nowrap}
 .forecast-table th:first-child,.forecast-table td:first-child{text-align:left;width:140px;padding-left:4px}
 .forecast-table td{text-align:center}
 .forecast-table img{width:36px;height:auto}

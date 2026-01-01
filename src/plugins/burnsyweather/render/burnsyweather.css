@@ -106,3 +106,13 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 .forecast-table img{width:36px;height:auto}
 .forecast-table thead th{font-size:13px}
 .forecast-table tbody th{font-weight:600;text-align:left;padding-right:10px}
+
+/* Summary panel table */
+.summary-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.summary-table th,.summary-table td{padding:6px 8px;text-align:center;vertical-align:middle}
+.summary-table thead th{font-size:13px;font-weight:700}
+.summary-symbol img{width:48px;height:auto}
+.summary-temp{display:flex;flex-direction:column;align-items:center;gap:6px}
+.big-temp{font-size:26px;font-weight:800}
+.small-temp{font-size:14px;color:var(--muted)}
+.deg{font-size:0.7em;vertical-align:super;margin-left:2px}

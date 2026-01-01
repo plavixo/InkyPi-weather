@@ -1,11 +1,19 @@
 {% extends "plugin.html" %}
 
 {% block content %}
-<div class="screen">
-  <div class="row top">
-    <div class="panel left">
-      <div class="panel-title">{{ title }}</div>
-      <div class="panel-body small">{{ content | safe }}</div>
+<div class="text-content">
+  <div class="title">{{ title }}</div>
+  <div class="model_run_time">{{ model_run_time }}</div>
+</div>
+
+<div>
+  <div class="screen">
+    <div class="row top">
+      <div class="panel left">
+        <div class="panel-title">{{ title }}</div>
+        <div class="panel-body small">{{ content | safe }}
+        <img src="{{ hour_one_weather_symbol }}">
+      </div>
     </div>
     <div class="panel right">
       <div class="panel-title">Summary</div>
@@ -20,4 +28,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

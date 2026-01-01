@@ -16,26 +16,7 @@ logger = logging.getLogger(__name__)
 class BurnsyWeather(BasePlugin):
 
     def generate_image(self, settings, device_config):
-        lat = float(settings.get('latitude'))
-        long = float(settings.get('longitude'))
-        if not lat or not long:
-            raise RuntimeError("Latitude and Longitude are required.")
-        
-        # api_key = device_config.load_env_key("OPEN_AI_SECRET")
-        # if not api_key:
-        #     raise RuntimeError("OPEN AI API Key not configured.")
-
-        # title = settings.get("title")
-        # if not title:
-        #     raise RuntimeError("Title is required.")
-
-        content = self.get_content()
-
-        image_template_params = {
-            "title": 'MetOffice Weather',
-            "content": content,
-            "plugin_settings": settings
-        }
+        image_template_params = self.parse_weather_data(settings)
 
         dimensions = device_config.get_resolution()
         if device_config.get_config("orientation") == "vertical":
@@ -45,10 +26,34 @@ class BurnsyWeather(BasePlugin):
 
         return image
 
-    def get_content(self):
-        weather_getter = WeatherGetter()
-        return weather_getter.get_content()
+    def get_content(self, settings):
+        lat = float(settings.get('latitude'))
+        long = float(settings.get('longitude'))
+        if not lat or not long:
+            raise RuntimeError("Latitude and Longitude are required.")
         
+        weather_getter = WeatherGetter()
+        return weather_getter.get_content(lat, long)
+
+    def parse_weather_data(self, settings):
+        try: 
+            weather_data = self.get_content(settings)
+        except Exception as e:
+            logger.error("Error getting weather content: %s", e)
+            raise RuntimeError("Error retrieving weather data, please check logs.")
+
+        icon_set = 'old'
+
+        print(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
+
+        image_template_params = {
+            "title": 'MetOffice Weather',
+            "model_run_time": weather_data.features[0].properties.modelRunDate,
+            "hour_one_weather_symbol": self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg'),
+            "plugin_settings": settings
+        }
+
+        return image_template_params 
     
     # def generate_settings_template(self):
     #     template_params = super().generate_settings_template()

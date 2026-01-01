@@ -56,7 +56,7 @@
   --w:800px;
   --h:480px;
   --gap:10px;
-  --pad:12px;
+  --pad:8px;
   --bg:#ffffff;
   --panel-bg:#f7f7f7;
   --fg:#111;
@@ -77,6 +77,9 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 
 .row.top{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
 .row.bottom{display:block}
+
+/* nudge bottom row up slightly to avoid clipping */
+.row.bottom{margin-top:-2px}
 
 .panel{background:var(--panel-bg);padding:10px;border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
 .panel-title{font-weight:700;font-size:16px;margin:0}

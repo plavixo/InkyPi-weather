@@ -2,6 +2,20 @@ from typing import List
 from typing import Any
 from dataclasses import dataclass
 import json
+
+@dataclass
+class DailyRoot:
+    type: str
+    features: List[Feature]
+    parameters: List[Parameter]
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'DailyRoot':
+        _type = str(obj.get("type"))
+        _features = [Feature.from_dict(y) for y in obj.get("features")]
+        _parameters = [Parameter.from_dict(y) for y in obj.get("parameters")]
+        return DailyRoot(_type, _features, _parameters)
+
 @dataclass
 class DayLowerBoundMaxFeelsLikeTemp:
     type: str
@@ -676,18 +690,7 @@ class Properties:
         _timeSeries = [TimeSeries.from_dict(y) for y in obj.get("timeSeries")]
         return Properties(_location, _requestPointDistance, _modelRunDate, _timeSeries)
 
-@dataclass
-class DailyRoot:
-    type: str
-    features: List[Feature]
-    parameters: List[Parameter]
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'DailyRoot':
-        _type = str(obj.get("type"))
-        _features = [Feature.from_dict(y) for y in obj.get("features")]
-        _parameters = [Parameter.from_dict(y) for y in obj.get("parameters")]
-        return DailyRoot(_type, _features, _parameters)
 
 @dataclass
 class Symbol:

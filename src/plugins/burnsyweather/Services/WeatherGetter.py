@@ -11,7 +11,6 @@ class WeatherGetter:
 
 
     def get_content(self, lat, long, timesteps):    
-        print(self.base_url)
 
         api_key = self.get_secret("MetOffice", "APIKey")
         print(api_key[:10])
@@ -81,6 +80,6 @@ class WeatherGetter:
 
         req.encoding = 'utf-8'
 
-        print(req.text)
+        # print(req.text)
 
         return req.text

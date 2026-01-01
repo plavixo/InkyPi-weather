@@ -50,6 +50,7 @@ class BurnsyWeather(BasePlugin):
             "title": 'MetOffice Weather',
             "model_run_time": weather_data.features[0].properties.modelRunDate,
             "hour_one_weather_symbol": self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg'),
+            "met_office_logo": self.get_plugin_dir('icons/Met_Office.png'),
             "plugin_settings": settings
         }
 

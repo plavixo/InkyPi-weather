@@ -10,12 +10,21 @@
   <div class="screen">
     <div class="row top">
       <div class="panel left">
-        <div class="panel-title">{{ title }}</div>
-        <div class="panel-body small">{{ content | safe }}
-        <img src="{{ hour_one_weather_symbol }}">
-        <div class="model_run_time">{{ model_run_time }}</div>
+        <div class="left-top">
+          <div class="left-top-img">
+            <img src="{{ met_office_logo }}" alt="Met Office">
+          </div>
+          <div class="left-top-title">
+            <div class="panel-title">{{ location_of_forecast | default("Location of Forecast") }}</div>
+          </div>
+        </div>
+
+        <div class="panel-body small">
+          {{ content | safe }}
+          <img src="{{ hour_one_weather_symbol }}">
+          <div class="model_run_time">{{ model_run_time }}</div>
+        </div>
       </div>
-    </div>
     <div class="panel right">
       <div class="panel-title">Summary</div>
       <div class="panel-body small">{{ content | safe }}</div>
@@ -24,8 +33,173 @@
 
   <div class="row bottom">
     <div class="panel full">
-      <div class="panel-title">Details</div>
-      <div class="panel-body">{{ content | safe }}</div>
+      <div class="panel-body">
+        <table class="forecast-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>{{ hour_1_time }}</th>
+              <th>{{ hour_2_time }}</th>
+              <th>{{ hour_3_time }}</th>
+              <th>{{ hour_4_time }}</th>
+              <th>{{ hour_5_time }}</th>
+              <th>{{ hour_6_time }}</th>
+              <th>{{ hour_7_time }}</th>
+              <th>{{ hour_8_time }}</th>
+              <th>{{ hour_9_time }}</th>
+              <th>{{ hour_10_time }}</th>
+              <th>{{ hour_11_time }}</th>
+              <th>{{ hour_12_time }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Symbol</th>
+              <td><img src="{{ hour_1_symbol }}" alt=""></td>
+              <td><img src="{{ hour_2_symbol }}" alt=""></td>
+              <td><img src="{{ hour_3_symbol }}" alt=""></td>
+              <td><img src="{{ hour_4_symbol }}" alt=""></td>
+              <td><img src="{{ hour_5_symbol }}" alt=""></td>
+              <td><img src="{{ hour_6_symbol }}" alt=""></td>
+              <td><img src="{{ hour_7_symbol }}" alt=""></td>
+              <td><img src="{{ hour_8_symbol }}" alt=""></td>
+              <td><img src="{{ hour_9_symbol }}" alt=""></td>
+              <td><img src="{{ hour_10_symbol }}" alt=""></td>
+              <td><img src="{{ hour_11_symbol }}" alt=""></td>
+              <td><img src="{{ hour_12_symbol }}" alt=""></td>
+            </tr>
+
+            <tr>
+              <th>Chance of Precip</th>
+              <td>{{ hour_1_precip }}</td>
+              <td>{{ hour_2_precip }}</td>
+              <td>{{ hour_3_precip }}</td>
+              <td>{{ hour_4_precip }}</td>
+              <td>{{ hour_5_precip }}</td>
+              <td>{{ hour_6_precip }}</td>
+              <td>{{ hour_7_precip }}</td>
+              <td>{{ hour_8_precip }}</td>
+              <td>{{ hour_9_precip }}</td>
+              <td>{{ hour_10_precip }}</td>
+              <td>{{ hour_11_precip }}</td>
+              <td>{{ hour_12_precip }}</td>
+            </tr>
+
+            <tr>
+              <th>Temp</th>
+              <td>{{ hour_1_temp }}</td>
+              <td>{{ hour_2_temp }}</td>
+              <td>{{ hour_3_temp }}</td>
+              <td>{{ hour_4_temp }}</td>
+              <td>{{ hour_5_temp }}</td>
+              <td>{{ hour_6_temp }}</td>
+              <td>{{ hour_7_temp }}</td>
+              <td>{{ hour_8_temp }}</td>
+              <td>{{ hour_9_temp }}</td>
+              <td>{{ hour_10_temp }}</td>
+              <td>{{ hour_11_temp }}</td>
+              <td>{{ hour_12_temp }}</td>
+            </tr>
+
+            <tr>
+              <th>Feels Like</th>
+              <td>{{ hour_1_feels }}</td>
+              <td>{{ hour_2_feels }}</td>
+              <td>{{ hour_3_feels }}</td>
+              <td>{{ hour_4_feels }}</td>
+              <td>{{ hour_5_feels }}</td>
+              <td>{{ hour_6_feels }}</td>
+              <td>{{ hour_7_feels }}</td>
+              <td>{{ hour_8_feels }}</td>
+              <td>{{ hour_9_feels }}</td>
+              <td>{{ hour_10_feels }}</td>
+              <td>{{ hour_11_feels }}</td>
+              <td>{{ hour_12_feels }}</td>
+            </tr>
+
+            <tr>
+              <th>Wind Dir</th>
+              <td>{{ hour_1_wind_dir }}</td>
+              <td>{{ hour_2_wind_dir }}</td>
+              <td>{{ hour_3_wind_dir }}</td>
+              <td>{{ hour_4_wind_dir }}</td>
+              <td>{{ hour_5_wind_dir }}</td>
+              <td>{{ hour_6_wind_dir }}</td>
+              <td>{{ hour_7_wind_dir }}</td>
+              <td>{{ hour_8_wind_dir }}</td>
+              <td>{{ hour_9_wind_dir }}</td>
+              <td>{{ hour_10_wind_dir }}</td>
+              <td>{{ hour_11_wind_dir }}</td>
+              <td>{{ hour_12_wind_dir }}</td>
+            </tr>
+
+            <tr>
+              <th>Wind Gust</th>
+              <td>{{ hour_1_wind_gust }}</td>
+              <td>{{ hour_2_wind_gust }}</td>
+              <td>{{ hour_3_wind_gust }}</td>
+              <td>{{ hour_4_wind_gust }}</td>
+              <td>{{ hour_5_wind_gust }}</td>
+              <td>{{ hour_6_wind_gust }}</td>
+              <td>{{ hour_7_wind_gust }}</td>
+              <td>{{ hour_8_wind_gust }}</td>
+              <td>{{ hour_9_wind_gust }}</td>
+              <td>{{ hour_10_wind_gust }}</td>
+              <td>{{ hour_11_wind_gust }}</td>
+              <td>{{ hour_12_wind_gust }}</td>
+            </tr>
+
+            <tr>
+              <th>Visibility</th>
+              <td>{{ hour_1_visibility }}</td>
+              <td>{{ hour_2_visibility }}</td>
+              <td>{{ hour_3_visibility }}</td>
+              <td>{{ hour_4_visibility }}</td>
+              <td>{{ hour_5_visibility }}</td>
+              <td>{{ hour_6_visibility }}</td>
+              <td>{{ hour_7_visibility }}</td>
+              <td>{{ hour_8_visibility }}</td>
+              <td>{{ hour_9_visibility }}</td>
+              <td>{{ hour_10_visibility }}</td>
+              <td>{{ hour_11_visibility }}</td>
+              <td>{{ hour_12_visibility }}</td>
+            </tr>
+
+            <tr>
+              <th>Humidity</th>
+              <td>{{ hour_1_humidity }}</td>
+              <td>{{ hour_2_humidity }}</td>
+              <td>{{ hour_3_humidity }}</td>
+              <td>{{ hour_4_humidity }}</td>
+              <td>{{ hour_5_humidity }}</td>
+              <td>{{ hour_6_humidity }}</td>
+              <td>{{ hour_7_humidity }}</td>
+              <td>{{ hour_8_humidity }}</td>
+              <td>{{ hour_9_humidity }}</td>
+              <td>{{ hour_10_humidity }}</td>
+              <td>{{ hour_11_humidity }}</td>
+              <td>{{ hour_12_humidity }}</td>
+            </tr>
+
+            <tr>
+              <th>UV</th>
+              <td>{{ hour_1_uv }}</td>
+              <td>{{ hour_2_uv }}</td>
+              <td>{{ hour_3_uv }}</td>
+              <td>{{ hour_4_uv }}</td>
+              <td>{{ hour_5_uv }}</td>
+              <td>{{ hour_6_uv }}</td>
+              <td>{{ hour_7_uv }}</td>
+              <td>{{ hour_8_uv }}</td>
+              <td>{{ hour_9_uv }}</td>
+              <td>{{ hour_10_uv }}</td>
+              <td>{{ hour_11_uv }}</td>
+              <td>{{ hour_12_uv }}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

@@ -2,7 +2,10 @@ import os
 import requests
 import json
 
-from plugins.burnsyweather.Models.MetOffice.Observations import ObservationsRoot, list_from_json
+from plugins.burnsyweather.Models.MetOffice.Observations import Root
+
+
+
 
 class ObservationAdaptor:
     base_url = "https://data.hub.api.metoffice.gov.uk/observation-land/1"
@@ -10,14 +13,15 @@ class ObservationAdaptor:
         geohash=self.retrieve_cached_geohash(latitude, longitude)
         print ("Geohash: ", geohash)
 
-        rawObservationData = self.get_observations(geohash)
+        raw_observation_data = self.get_observations(geohash)
 
         # Write to file for debugging
         f = open("observations", "w")
-        f.write(rawObservationData)
+        f.write(raw_observation_data)
         print("File created: ", os.path.abspath(f.name))
         f.close()  
 
+        roots = Root.from_list(json.loads(raw_observation_data))
         params = {}
 
         

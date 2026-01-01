@@ -1,8 +1,23 @@
 {% extends "plugin.html" %}
 
 {% block content %}
-<div class="text-content">
-  <div class="title">{{ title }}</div>
-  <div class="content">{{ content | safe }}</div>
+<div class="screen">
+  <div class="row top">
+    <div class="panel left">
+      <div class="panel-title">{{ title }}</div>
+      <div class="panel-body small">{{ content | safe }}</div>
+    </div>
+    <div class="panel right">
+      <div class="panel-title">Summary</div>
+      <div class="panel-body small">{{ content | safe }}</div>
+    </div>
+  </div>
+
+  <div class="row bottom">
+    <div class="panel full">
+      <div class="panel-title">Details</div>
+      <div class="panel-body">{{ content | safe }}</div>
+    </div>
+  </div>
 </div>
 {% endblock %}

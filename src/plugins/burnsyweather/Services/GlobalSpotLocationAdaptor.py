@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 
-class GlobalSpotLocationHoursAdaptor:
+class GlobalSpotLocationAdaptor:
     def get_spot_hourly_forecast(self, weather_data, plugin_dir):     
         
         timed_series = weather_data.features[0].properties.timeSeries

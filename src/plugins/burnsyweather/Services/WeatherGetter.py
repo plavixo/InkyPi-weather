@@ -10,14 +10,14 @@ class WeatherGetter:
     base_url = "https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point/"
 
 
-    def get_content(self, lat, long):    
+    def get_content(self, lat, long, timestep):    
         print(self.base_url)
 
         api_key = self.get_value_from_json("MetOffice", "APIKey")
         print(api_key[:10])
 
 
-        timesteps = "hourly"
+        timesteps = timestep
         includeLocation = "TRUE"
         excludeMetadata = "FALSE"
         latitude = lat
@@ -31,10 +31,7 @@ class WeatherGetter:
         root = Root.from_dict(jsonstring)
 
         print(f"Root.type: {root.type}")
-        modelRunDate= root.features[0].properties.modelRunDate
-
-
-
+        
         return root
     
     def get_value_from_json(self, key, sub_key):

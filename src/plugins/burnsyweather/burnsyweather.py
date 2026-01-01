@@ -1,7 +1,7 @@
 from plugins.base_plugin.base_plugin import BasePlugin
 from utils.app_utils import resolve_path
 from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
-from plugins.burnsyweather.Services.GlobalSpotLocationHoursAdaptor import GlobalSpotLocationHoursAdaptor
+from plugins.burnsyweather.Services.GlobalSpotLocationAdaptor import GlobalSpotLocationAdaptor
 
 # from PIL import Image, ImageDraw, ImageFont
 from utils.image_utils import resize_image
@@ -30,7 +30,7 @@ class BurnsyWeather(BasePlugin):
     
 
     def create_weather_tokens(self, settings):
-        # Get Weather Data - this bit may move into GlobalSpotLocationHoursAdaptor if that's the only class that consumes it
+        # Get hourly Weather Data - this bit may move into GlobalSpotLocationAdaptor if that's the only class that consumes it
         try: 
             lat = float(settings.get('latitude'))
             long = float(settings.get('longitude'))
@@ -38,16 +38,20 @@ class BurnsyWeather(BasePlugin):
                 raise RuntimeError("Latitude and Longitude are required.")
             
             weather_getter = WeatherGetter()
-            weather_data =  weather_getter.get_content(lat, long)
+            weather_data_hourly =  weather_getter.get_content(lat, long, 'hourly')
+            weather_data_daily =  weather_getter.get_content(lat, long, 'daily')
         except Exception as e:
             logger.error("Error getting weather content: %s", e)
             raise RuntimeError("Error retrieving weather data, please check logs.")
 
-        # Adapt Weather Data
-        global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(weather_data, self.get_plugin_dir())
+        # Adapt hourly Weather Data
+        global_spot_location_hours = GlobalSpotLocationAdaptor().get_spot_hourly_forecast(weather_data_hourly, self.get_plugin_dir())
+        
+        # Adapt daily Weather Data
+        global_spot_location_days = GlobalSpotLocationAdaptor().get_spot_hourly_forecast(weather_data_daily, self.get_plugin_dir())
 
         # Prepare Additional Params
-        standard_params = self.prepare_standard_params(settings, weather_data)
+        standard_params = self.prepare_standard_params(settings, weather_data_hourly)
 
         # Combine Params
         image_template_params = standard_params | global_spot_location_hours

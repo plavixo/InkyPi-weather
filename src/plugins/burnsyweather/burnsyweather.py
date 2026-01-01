@@ -26,42 +26,35 @@ class BurnsyWeather(BasePlugin):
 
         return image
 
-    def get_content(self, settings):
-        lat = float(settings.get('latitude'))
-        long = float(settings.get('longitude'))
-        if not lat or not long:
-            raise RuntimeError("Latitude and Longitude are required.")
-        
-        weather_getter = WeatherGetter()
-        return weather_getter.get_content(lat, long)
+    
 
     def parse_weather_data(self, settings):
         try: 
-            weather_data = self.get_content(settings)
+            lat = float(settings.get('latitude'))
+            long = float(settings.get('longitude'))
+            if not lat or not long:
+                raise RuntimeError("Latitude and Longitude are required.")
+            
+            weather_getter = WeatherGetter()
+            weather_data =  weather_getter.get_content(lat, long)
         except Exception as e:
             logger.error("Error getting weather content: %s", e)
             raise RuntimeError("Error retrieving weather data, please check logs.")
 
         icon_set = 'old'
 
-        print(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
-
+        location_of_forecast = str(weather_data.features[0].geometry.coordinates[0]) +", " + str(weather_data.features[0].geometry.coordinates[1])
+        model_run_date = weather_data.features[0].properties.modelRunDate
+        hour_one_weather_symbol = self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
+        
         image_template_params = {
             "title": 'MetOffice Weather',
-            "model_run_time": weather_data.features[0].properties.modelRunDate,
-            "hour_one_weather_symbol": self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg'),
+            "location_of_forecast": location_of_forecast,
+            "model_run_time": model_run_date,
+            "hour_one_weather_symbol": hour_one_weather_symbol,
             "met_office_logo": self.get_plugin_dir('icons/Met_Office.png'),
             "plugin_settings": settings
         }
 
         return image_template_params 
-    
-    # def generate_settings_template(self):
-    #     template_params = super().generate_settings_template()
-    #     template_params['api_key'] = {
-    #         "required": True,
-    #         "service": "OpenAI",
-    #         "expected_key": "OPEN_AI_SECRET"
-    #     }
-    #     template_params['style_settings'] = True
-    #     return template_params
+   

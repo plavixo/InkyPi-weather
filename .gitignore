@@ -174,3 +174,5 @@ mock_display_output/
 /src/static/styles/
 daily
 hourly
+src/static/images/current_image.png
+src/config/device_dev.json

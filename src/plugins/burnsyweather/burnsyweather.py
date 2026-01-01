@@ -70,12 +70,15 @@ class BurnsyWeather(BasePlugin):
         return image_template_params 
 
 
-
-
     def prepare_standard_params(self, settings, weather_data):
         icon_set = 'old'
         hour_one_weather_symbol = self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
-        location_of_forecast = str(weather_data.features[0].geometry.coordinates[0]) +", " + str(weather_data.features[0].geometry.coordinates[1])
+        coords = weather_data.features[0].geometry.coordinates
+        lon = float(coords[0])
+        lat = float(coords[1])
+
+        location_of_forecast = self.get_city_from_coords(lat, lon)
+
         model_run_date = weather_data.features[0].properties.modelRunDate
         
         basic_params = {
@@ -88,4 +91,32 @@ class BurnsyWeather(BasePlugin):
         }
         
         return basic_params
-   
+    
+    def get_city_from_coords(self, lat, lon):
+        # Default to coordinate pair; attempt reverse geocode to get a friendly place name
+        location_of_forecast = f"{lat}, {lon}"
+        try:
+            resp = requests.get(
+                "https://nominatim.openstreetmap.org/reverse",
+                params={"lat": lat, "lon": lon, "format": "jsonv2", "addressdetails": 1},
+                headers={"User-Agent": "InkyPi-weather"},
+                timeout=5,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            addr = data.get("address", {}) or {}
+            # Prefer specific place names (city/town/village/hamlet/municipality)
+            for key in ("city", "town", "village", "hamlet", "municipality"):
+                name = addr.get(key)
+                if name:
+                    return name
+            # Fallback to broader area (county/state/country)
+            for key in ("county", "state", "country"):
+                name = addr.get(key)
+                if name:
+                    return name
+            # No suitable name found; keep coords as text
+            return location_of_forecast
+        except Exception as e:
+            logger.warning("Reverse geocode failed: %s", e)
+            return location_of_forecast

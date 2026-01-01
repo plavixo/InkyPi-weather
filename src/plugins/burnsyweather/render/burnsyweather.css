@@ -121,8 +121,15 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 /* divider color */
 :root{--daily-divider: rgba(0,0,0,0.06)}
 
-/* vertical dividers between day groups (columns 3 and 5 are the starts of day2/day3 groups) */
-.daily-table th:nth-child(3), .daily-table td:nth-child(3),
-.daily-table th:nth-child(5), .daily-table td:nth-child(5) {
+
+/* vertical dividers between day groups — target odd columns except the first (3 and 5) */
+.daily-table thead th:nth-child(2),
+.daily-table thead th:nth-child(3),
+/* symbols row uses three cells (each colspan=2) */
+.daily-table tbody tr.symbols-row td:nth-child(2),
+.daily-table tbody tr.symbols-row td:nth-child(3),
+/* temps row uses six cells (max,min pairs) - put dividers before 3rd and 5th cells */
+.daily-table tbody tr.temps-row td:nth-child(3),
+.daily-table tbody tr.temps-row td:nth-child(5) {
   border-left: 1px solid var(--daily-divider);
 }

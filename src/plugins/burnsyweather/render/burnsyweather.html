@@ -25,11 +25,17 @@
                 <div class="body-left-top-temp observation-temperature">{{ observation_temperature }}<span class="deg">°</span></div>
               </div>
               <div class="body-left-bottom">
-                <div class="observation-visibility">{{ observation_visibility }}</div>
-                <div class="observation-humidity">{{ observation_humidity }}%</div>
+                <div class="observation-visibility">Visibility: {{ observation_visibility }}</div>
+                <div class="observation-humidity">Humidity: {{ observation_humidity }}%</div>
               </div>
             </div>
-            <div class="body-right model_run_time">{{ model_run_time }}</div>
+            <div class="body-right">
+              <div class="observation-datetime">{{ observation_datetime }}</div>
+              <div class="observation-wind-direction">Wind Direction: {{ observation_wind_direction }}</div>
+              <div class="observation-wind-speed">Wind Speed: {{ observation_wind_speed }}</div>
+              <div class="observation-wind-gust">Wind Gust: {{ observation_wind_gust }}</div>
+              <div class="observation-pressure-tendency">Pressure Tendency: {{ observation_pressure_tendency }}</div>
+            </div>
           </div>
         </div>
 

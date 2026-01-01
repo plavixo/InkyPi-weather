@@ -2,7 +2,7 @@ from typing import Any, List
 from dataclasses import dataclass
 import json
 @dataclass
-class Root:
+class Observations:
     datetime: str
     humidity: int
     mslp: int
@@ -15,11 +15,11 @@ class Root:
     wind_speed: float
 
     @staticmethod
-    def from_list(objs: Any) -> List["Root"]:
-        return [Root.from_dict(obj) for obj in objs]
+    def from_list(objs: Any) -> List["Observations"]:
+        return [Observations.from_dict(obj) for obj in objs]
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Root':
+    def from_dict(obj: Any) -> 'Observations':
         _datetime = str(obj.get("datetime"))
         def _f(v, default=0.0):
             return default if v is None else float(v)
@@ -35,8 +35,4 @@ class Root:
         _wind_direction = obj.get("wind_direction") or ""
         _wind_gust = _f(obj.get("wind_gust"))
         _wind_speed = _f(obj.get("wind_speed"))
-        return Root(_datetime, _humidity, _mslp, _pressure_tendency, _temperature, _visibility, _weather_code, _wind_direction, _wind_gust, _wind_speed)
-
-# Example Usage
-# jsonstring = json.loads(myjsonstring)
-# root = Root.from_dict(jsonstring)
+        return Observations(_datetime, _humidity, _mslp, _pressure_tendency, _temperature, _visibility, _weather_code, _wind_direction, _wind_gust, _wind_speed)

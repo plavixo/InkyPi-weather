@@ -2,7 +2,7 @@ import os
 import requests
 import json
 
-from plugins.burnsyweather.Models.MetOffice.Observations import Root
+from plugins.burnsyweather.Models.MetOffice.Observations import Observations
 
 
 
@@ -21,30 +21,21 @@ class ObservationAdaptor:
         print("File created: ", os.path.abspath(f.name))
         f.close()  
 
-        roots = Root.from_list(json.loads(raw_observation_data))
-        params = {}
+        observations = Observations.from_list(json.loads(raw_observation_data))
 
-        
-        # jsonstring = json.loads(rawObservationData)
-        # observations = list_from_json(jsonstring)
-
-        # latest_entry = observations[-1]
-
-        #     'observation_datetime': latest_entry.datetime,
-        #     'observation_humidity': latest_entry.humidity,
-        #     'observation_mslp': latest_entry.mslp,
-        #     'observation_pressure_tendency': latest_entry.pressure_tendency,
-        #     'observation_temperature': latest_entry.temperature,
-        #     'observation_visibility': latest_entry.visibility,
-        #     'observation_weather_code': latest_entry.weather_code,
-        #     'observation_wind_direction': latest_entry.wind_direction,
-        #     'observation_wind_gust': latest_entry.wind_gust,
-        #     'observation_wind_speed': latest_entry.wind_speed
-        # }
-
-
-
-
+        latest_entry = observations[-1]
+        params = {
+            'observation_datetime': latest_entry.datetime,
+            'observation_humidity': latest_entry.humidity,
+            'observation_mslp': latest_entry.mslp,
+            'observation_pressure_tendency': latest_entry.pressure_tendency,
+            'observation_temperature': latest_entry.temperature,
+            'observation_visibility': latest_entry.visibility,
+            'observation_weather_code': latest_entry.weather_code,
+            'observation_wind_direction': latest_entry.wind_direction,
+            'observation_wind_gust': latest_entry.wind_gust,
+            'observation_wind_speed': latest_entry.wind_speed
+        }
         return params
 
     def get_observations(self, geohash):

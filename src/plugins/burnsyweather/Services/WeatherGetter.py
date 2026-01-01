@@ -4,20 +4,19 @@ from urllib.request import urlopen
 import json
 import time
 import requests
-from plugins.burnsyweather.Models.MetOffice.SiteSpecific import *
+
 
 class WeatherGetter:
     base_url = "https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point/"
 
 
-    def get_content(self, lat, long):    
+    def get_content(self, lat, long, timesteps):    
         print(self.base_url)
 
-        api_key = self.get_value_from_json("MetOffice", "APIKey")
+        api_key = self.get_secret("MetOffice", "APIKey")
         print(api_key[:10])
 
 
-        timesteps = "hourly"
         includeLocation = "TRUE"
         excludeMetadata = "FALSE"
         latitude = lat
@@ -27,17 +26,16 @@ class WeatherGetter:
         requestHeaders = {"apikey": api_key}
         outcome = self.retrieve_forecast(self.base_url, timesteps, requestHeaders, latitude, longitude, excludeMetadata, includeLocation)
 
-        jsonstring = json.loads(outcome)
-        root = Root.from_dict(jsonstring)
+        # Write to file for debugging
+        f = open(timesteps, "w")
+        f.write(outcome)
+        print("File created: ", os.path.abspath(f.name))
+        f.close()  
 
-        print(f"Root.type: {root.type}")
-        modelRunDate= root.features[0].properties.modelRunDate
 
-
-
-        return root
+        return outcome
     
-    def get_value_from_json(self, key, sub_key):
+    def get_secret(self, key, sub_key):
         # TODO: Change this to get from static file location which will work with the Pi
 
         print("Getting value from JSON")

@@ -2,6 +2,7 @@ from plugins.base_plugin.base_plugin import BasePlugin
 from utils.app_utils import resolve_path
 from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
 from plugins.burnsyweather.Services.GlobalSpotLocationHoursAdaptor import GlobalSpotLocationHoursAdaptor
+from plugins.burnsyweather.Models.MetOffice.SiteSpecific import *
 
 # from PIL import Image, ImageDraw, ImageFont
 from utils.image_utils import resize_image
@@ -38,16 +39,20 @@ class BurnsyWeather(BasePlugin):
                 raise RuntimeError("Latitude and Longitude are required.")
             
             weather_getter = WeatherGetter()
-            weather_data =  weather_getter.get_content(lat, long)
+            raw_weather_data_hourly =  weather_getter.get_content(lat, long, "hourly")
+            jsonstring = json.loads(raw_weather_data_hourly)
+            weather_data_hourly = Root.from_dict(jsonstring)
+
+
         except Exception as e:
             logger.error("Error getting weather content: %s", e)
             raise RuntimeError("Error retrieving weather data, please check logs.")
 
         # Adapt Weather Data
-        global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(weather_data, self.get_plugin_dir())
+        global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(weather_data_hourly, self.get_plugin_dir())
 
         # Prepare Additional Params
-        standard_params = self.prepare_standard_params(settings, weather_data)
+        standard_params = self.prepare_standard_params(settings, weather_data_hourly)
 
         # Combine Params
         image_template_params = standard_params | global_spot_location_hours

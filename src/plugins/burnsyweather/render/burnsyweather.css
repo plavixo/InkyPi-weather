@@ -83,6 +83,10 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 .panel-body{font-size:14px;line-height:1.2;color:var(--fg);overflow:hidden}
 .panel-body.small{font-size:12px;color:var(--muted);overflow:hidden}
 
+.panel-body.small .body-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.panel-body.small .body-left{display:flex;flex-direction:column;justify-content:space-between;min-width:64px}
+.panel-body.small .body-right{font-size:12px;color:var(--muted);text-align:right;min-width:80px}
+
 .panel.full{height:100%}
 
 /* Ensure panels fill their grid areas */
@@ -123,13 +127,17 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 
 
 /* vertical dividers between day groups — target odd columns except the first (3 and 5) */
-.daily-table thead th:nth-child(2),
-.daily-table thead th:nth-child(3),
-/* symbols row uses three cells (each colspan=2) */
-.daily-table tbody tr.symbols-row td:nth-child(2),
-.daily-table tbody tr.symbols-row td:nth-child(3),
-/* temps row uses six cells (max,min pairs) - put dividers before 3rd and 5th cells */
-.daily-table tbody tr.temps-row td:nth-child(3),
-.daily-table tbody tr.temps-row td:nth-child(5) {
+.daily-table th:nth-child(odd):not(:first-child), .daily-table td:nth-child(odd):not(:first-child) {
   border-left: 1px solid var(--daily-divider);
 }
+
+/* Left panel small body: split top into symbol + temperature horizontally */
+.panel-body.small .body-left-top{display:flex;flex-direction:row;align-items:center;gap:8px}
+.panel-body.small .body-left-top-symbol img{width:48px;height:auto;display:block}
+.panel-body.small .body-left-top-temp{font-size:18px;font-weight:700;color:var(--fg)}
+.panel-body.small .observation-temperature{line-height:1}
+
+/* visibility + humidity stacked */
+.panel-body.small .body-left-bottom{display:flex;flex-direction:column;align-items:center;gap:4px}
+.panel-body.small .observation-visibility{font-size:12px;color:var(--muted)}
+.panel-body.small .observation-humidity{font-size:12px;color:var(--muted)}

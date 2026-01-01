@@ -14,12 +14,28 @@
           </div>
         </div>
 
-        <div class="panel-body small">
-          {{ content | safe }}
-          <img src="{{ hour_one_weather_symbol }}">
-          <div class="model_run_time">{{ model_run_time }}</div>
+      
+        <div id="observations-pane" class="panel-body small observations-panel">
+          <div class="body-row">
+            <div class="body-left">
+              <div class="body-left-top">
+                <div class="body-left-top-symbol">
+                  <img src="{{ hour_one_weather_symbol }}" alt="hour symbol">
+                </div>
+                <div class="body-left-top-temp observation-temperature">{{ observation_temperature }}<span class="deg">°</span></div>
+              </div>
+              <div class="body-left-bottom">
+                <div class="observation-visibility">{{ observation_visibility }}</div>
+                <div class="observation-humidity">{{ observation_humidity }}%</div>
+              </div>
+            </div>
+            <div class="body-right model_run_time">{{ model_run_time }}</div>
+          </div>
         </div>
+
+
       </div>
+      
     <div class="panel right">
       <div class="panel-body small">
         <table class="daily-table">

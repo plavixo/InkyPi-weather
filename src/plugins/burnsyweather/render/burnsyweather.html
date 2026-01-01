@@ -26,30 +26,24 @@
         <table class="daily-table">
           <thead>
             <tr>
-              <th>{{ daily_1_heading }}</th>
-              <th>{{ daily_2_heading }}</th>
-              <th>{{ daily_3_heading }}</th>
+              <th colspan="2">{{ daily_1_heading }}</th>
+              <th colspan="2">{{ daily_2_heading }}</th>
+              <th colspan="2">{{ daily_3_heading }}</th>
             </tr>
           </thead>
           <tbody>
             <tr class="symbols-row">
-              <td class="daily-symbol"><img src="{{ daily_1_symbol }}" alt=""></td>
-              <td class="daily-symbol"><img src="{{ daily_2_symbol }}" alt=""></td>
-              <td class="daily-symbol"><img src="{{ daily_3_symbol }}" alt=""></td>
+              <td colspan="2" class="daily-symbol"><img src="{{ day_1_weather_symbol }}" alt=""></td>
+              <td colspan="2" class="daily-symbol"><img src="{{ day_2_weather_symbol }}" alt=""></td>
+              <td colspan="2" class="daily-symbol"><img src="{{ day_3_weather_symbol }}" alt=""></td>
             </tr>
             <tr class="temps-row">
-              <td class="daily-temp">
-                <div class="big-temp">{{ daily_1_high }}<span class="deg">°</span></div>
-                <div class="small-temp">{{ daily_1_low }}<span class="deg">°</span></div>
-              </td>
-              <td class="daily-temp">
-                <div class="big-temp">{{ daily_2_high }}<span class="deg">°</span></div>
-                <div class="small-temp">{{ daily_2_low }}<span class="deg">°</span></div>
-              </td>
-              <td class="daily-temp">
-                <div class="big-temp">{{ daily_3_high }}<span class="deg">°</span></div>
-                <div class="small-temp">{{ daily_3_low }}<span class="deg">°</span></div>
-              </td>
+              <td class="daily-temp max">{{ day_1_temp_max }}<span class="deg">°</span></td>
+              <td class="daily-temp min">{{ day_1_temp_min }}<span class="deg">°</span></td>
+              <td class="daily-temp max">{{ day_2_temp_max }}<span class="deg">°</span></td>
+              <td class="daily-temp min">{{ day_2_temp_min }}<span class="deg">°</span></td>
+              <td class="daily-temp max">{{ day_3_temp_max }}<span class="deg">°</span></td>
+              <td class="daily-temp min">{{ day_3_temp_min }}<span class="deg">°</span></td>
             </tr>
           </tbody>
         </table>

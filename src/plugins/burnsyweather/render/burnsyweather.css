@@ -112,16 +112,17 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 .daily-table th,.daily-table td{padding:6px 8px;text-align:center;vertical-align:middle}
 .daily-table thead th{font-size:13px;font-weight:700}
 .daily-symbol img{width:48px;height:auto}
-.daily-temp{display:flex;flex-direction:column;align-items:center;gap:6px}
 .big-temp{font-size:26px;font-weight:800}
 .small-temp{font-size:14px;color:var(--muted)}
 .deg{font-size:0.7em;vertical-align:super;margin-left:2px}
+.daily-temp.min{font-size:14px;font-weight:600;color:var(--muted)}
+.daily-temp.max{font-size:20px}
 
 /* divider color */
 :root{--daily-divider: rgba(0,0,0,0.06)}
 
-/* vertical dividers between columns (full height via nth-child selectors) */
-.daily-table th:nth-child(2), .daily-table td:nth-child(2),
-.daily-table th:nth-child(3), .daily-table td:nth-child(3) {
+/* vertical dividers between day groups (columns 3 and 5 are the starts of day2/day3 groups) */
+.daily-table th:nth-child(3), .daily-table td:nth-child(3),
+.daily-table th:nth-child(5), .daily-table td:nth-child(5) {
   border-left: 1px solid var(--daily-divider);
 }

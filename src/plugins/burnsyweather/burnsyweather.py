@@ -29,6 +29,7 @@ class BurnsyWeather(BasePlugin):
     
 
     def parse_weather_data(self, settings):
+        # Get Weather Data
         try: 
             lat = float(settings.get('latitude'))
             long = float(settings.get('longitude'))
@@ -41,12 +42,15 @@ class BurnsyWeather(BasePlugin):
             logger.error("Error getting weather content: %s", e)
             raise RuntimeError("Error retrieving weather data, please check logs.")
 
+        # Adapt Weather Data
         icon_set = 'old'
 
         location_of_forecast = str(weather_data.features[0].geometry.coordinates[0]) +", " + str(weather_data.features[0].geometry.coordinates[1])
         model_run_date = weather_data.features[0].properties.modelRunDate
         hour_one_weather_symbol = self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
         
+
+        # Prepare Template Params
         image_template_params = {
             "title": 'MetOffice Weather',
             "location_of_forecast": location_of_forecast,
@@ -55,6 +59,5 @@ class BurnsyWeather(BasePlugin):
             "met_office_logo": self.get_plugin_dir('icons/Met_Office.png'),
             "plugin_settings": settings
         }
-
         return image_template_params 
    

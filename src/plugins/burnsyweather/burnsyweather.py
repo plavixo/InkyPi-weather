@@ -2,7 +2,7 @@ from plugins.base_plugin.base_plugin import BasePlugin
 from utils.app_utils import resolve_path
 from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
 from plugins.burnsyweather.Services.GlobalSpotLocationHoursAdaptor import GlobalSpotLocationHoursAdaptor
-from plugins.burnsyweather.Models.MetOffice.SiteSpecific import *
+from plugins.burnsyweather.Models.MetOffice.SiteSpecificHourly import *
 
 # from PIL import Image, ImageDraw, ImageFont
 from utils.image_utils import resize_image
@@ -39,9 +39,15 @@ class BurnsyWeather(BasePlugin):
                 raise RuntimeError("Latitude and Longitude are required.")
             
             weather_getter = WeatherGetter()
+
+
             raw_weather_data_hourly =  weather_getter.get_content(lat, long, "hourly")
             jsonstring = json.loads(raw_weather_data_hourly)
-            weather_data_hourly = Root.from_dict(jsonstring)
+            weather_data_hourly = HourlyRoot.from_dict(jsonstring)
+
+            # raw_weather_data_daily =  weather_getter.get_content(lat, long, "daily")
+            # jsonstring_daily = json.loads(raw_weather_data_daily)
+            # weather_data_daily = DailyRoot.from_dict(jsonstring_daily)
 
 
         except Exception as e:

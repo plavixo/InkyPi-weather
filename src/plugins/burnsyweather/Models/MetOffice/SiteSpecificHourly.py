@@ -178,17 +178,17 @@ class Properties:
         return Properties(_requestPointDistance, _modelRunDate, _timeSeries)
 
 @dataclass
-class Root:
+class HourlyRoot:
     type: str
     features: List[Feature]
     parameters: List[Parameter]
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Root':
+    def from_dict(obj: Any) -> 'HourlyRoot':
         _type = str(obj.get("type"))
         _features = [Feature.from_dict(y) for y in obj.get("features")]
         _parameters = [Parameter.from_dict(y) for y in obj.get("parameters")]
-        return Root(_type, _features, _parameters)
+        return HourlyRoot(_type, _features, _parameters)
 
 @dataclass
 class ScreenDewPointTemperature:

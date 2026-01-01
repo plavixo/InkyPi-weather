@@ -3,6 +3,7 @@ from utils.app_utils import resolve_path
 from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
 from plugins.burnsyweather.Services.GlobalSpotLocationHoursAdaptor import GlobalSpotLocationHoursAdaptor
 from plugins.burnsyweather.Services.GlobalSpotLocationDailyAdaptor import GlobalSpotLocationDailyAdaptor
+from plugins.burnsyweather.Services.ObservationAdaptor import ObservationAdaptor
 from plugins.burnsyweather.Models.MetOffice.SiteSpecificHourly import *
 from plugins.burnsyweather.Models.MetOffice.SiteSpecificDaily import *
 
@@ -59,13 +60,13 @@ class BurnsyWeather(BasePlugin):
         # Adapt Weather Data
         global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(weather_data_hourly, self.get_plugin_dir())
         global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(weather_data_daily, self.get_plugin_dir())
-
+        observation_params = ObservationAdaptor().get_observation_params()
 
         # Prepare Additional Params
         standard_params = self.prepare_standard_params(settings, weather_data_hourly)
 
         # Combine Params
-        image_template_params = standard_params | global_spot_location_hours | global_spot_location_daily
+        image_template_params = standard_params | global_spot_location_hours | global_spot_location_daily | observation_params
 
         return image_template_params 
 

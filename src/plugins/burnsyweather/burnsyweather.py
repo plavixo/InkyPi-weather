@@ -1,6 +1,7 @@
 from plugins.base_plugin.base_plugin import BasePlugin
 from utils.app_utils import resolve_path
-from plugins.burnsyweather.WeatherGetter import WeatherGetter
+from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
+from plugins.burnsyweather.Services.GlobalSpotLocationHoursAdaptor import GlobalSpotLocationHoursAdaptor
 
 # from PIL import Image, ImageDraw, ImageFont
 from utils.image_utils import resize_image
@@ -44,9 +45,9 @@ class BurnsyWeather(BasePlugin):
 
         # Adapt Weather Data
 
-        hours ={
-            "hour_1_time": (datetime.fromisoformat(weather_data.features[0].properties.timeSeries[0].time)).strftime('%H:%M'),
-        }
+        adaptor = GlobalSpotLocationHoursAdaptor()
+        global_spot_location_hours = adaptor.get_spot_hourly_forecast(weather_data)
+
 
 
         icon_set = 'old'
@@ -64,6 +65,6 @@ class BurnsyWeather(BasePlugin):
             "plugin_settings": settings
         }
 
-        image_template_params = basic_params | hours
+        image_template_params = basic_params | global_spot_location_hours
         return image_template_params 
    

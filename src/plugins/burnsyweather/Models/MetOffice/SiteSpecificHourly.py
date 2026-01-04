@@ -3,6 +3,21 @@ from typing import Any
 from dataclasses import dataclass
 import json
 @dataclass
+class Geometry:
+    type: str
+    coordinates: List[float]
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Geometry':
+        _type = str(obj.get("type"))
+        def _parse_coords(o):
+            if isinstance(o, list):
+                return [_parse_coords(x) for x in o]
+            return float(o)
+        _coordinates = _parse_coords(obj.get("coordinates"))
+        return Geometry(_type, _coordinates)
+
+@dataclass
 class Feature:
     type: str
     geometry: Geometry
@@ -27,21 +42,6 @@ class FeelsLikeTemperature:
         _description = str(obj.get("description"))
         _unit = Unit.from_dict(obj.get("unit"))
         return FeelsLikeTemperature(_type, _description, _unit)
-
-@dataclass
-class Geometry:
-    type: str
-    coordinates: List[float]
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Geometry':
-        _type = str(obj.get("type"))
-        def _parse_coords(o):
-            if isinstance(o, list):
-                return [_parse_coords(x) for x in o]
-            return float(o)
-        _coordinates = _parse_coords(obj.get("coordinates"))
-        return Geometry(_type, _coordinates)
 
 @dataclass
 class Max10mWindGust:

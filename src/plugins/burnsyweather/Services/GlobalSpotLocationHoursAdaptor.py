@@ -31,8 +31,15 @@ class GlobalSpotLocationHoursAdaptor:
             global_spot_location_hours[f"hour_{i+1}_humidity"] = str(round(timed_series[i].screenRelativeHumidity)) + '%'
             global_spot_location_hours[f"hour_{i+1}_uv"] = timed_series[i].uvIndex
         
-        # Debug: Print out the first 12 hours of weather symbols because 0 is missing
-        for j in range(12):
-            print(f"Signifiant Weather Code for hour {j+1}: ", global_spot_location_hours[f"hour_{j+1}_weather_symbol"])
+        
+        
+        icon_set = 'old'
+        hour_one_weather_symbol = os.path.join(plugin_dir, f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
 
+        model_run_date = weather_data.features[0].properties.modelRunDate
+
+        global_spot_location_hours["model_run_time"] = model_run_date
+        global_spot_location_hours["hour_one_weather_symbol"] = hour_one_weather_symbol
+
+       
         return global_spot_location_hours

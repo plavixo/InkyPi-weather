@@ -60,7 +60,7 @@ class BurnsyWeather(BasePlugin):
         observation_params = ObservationAdaptor().get_observation_params(lat, long)
 
         # Prepare Additional Params
-        standard_params = self.prepare_standard_params(settings, weather_data_hourly)
+        standard_params = self.prepare_standard_params(settings)
 
         location_params = {
             "location_of_forecast": self.get_city_from_coords(lat, long)
@@ -78,26 +78,12 @@ class BurnsyWeather(BasePlugin):
         return image_template_params 
 
 
-    def prepare_standard_params(self, settings, weather_data):
-        set1 = {
+    def prepare_standard_params(self, settings):
+        basic_params = {
             "title": 'MetOffice Weather',
             "plugin_settings": settings,
             "met_office_logo": self.get_plugin_dir('icons/Met_Office.png')
         }
-
-        icon_set = 'old'
-        hour_one_weather_symbol = self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
-
-        model_run_date = weather_data.features[0].properties.modelRunDate
-        
-        
-        set2 = {
-            "model_run_time": model_run_date,
-            "hour_one_weather_symbol": hour_one_weather_symbol
-        }
-
-        basic_params = set1 | set2
-
         return basic_params
     
     def get_city_from_coords(self, lat, lon):

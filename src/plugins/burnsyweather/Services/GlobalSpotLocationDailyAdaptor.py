@@ -6,7 +6,7 @@ from plugins.burnsyweather.Models.MetOffice.SiteSpecificDaily import DailyRoot
 from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
 
 class GlobalSpotLocationDailyAdaptor:
-    def get_spot_daily_forecast(self, weather_data, plugin_dir,lat, long):
+    def get_spot_daily_forecast(self, plugin_dir,lat, long):
 
         weather_getter = WeatherGetter()
         raw_weather_data_daily = weather_getter.get_content(lat, long, "daily")

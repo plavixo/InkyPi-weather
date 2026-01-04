@@ -1,13 +1,19 @@
 import json
 import os
+import sys
 
 class SecretGetter:
      def get_secret(self, key, sub_key):
         print("Getting value from JSON")
 
-        json_file=os.path.join(os.getenv('APPDATA'), "Python\\Secrets\\InkyPi-Weather\\secrets.json")
-        if json_file is None or not os.path.exists(json_file):
+        if sys.platform.startswith('win'):
+            print("Running on Windows")
+            json_file=os.path.join(os.getenv('APPDATA'), "Python\\Secrets\\InkyPi-Weather\\secrets.json")
+        elif sys.platform.startswith('linux'):
+            print("Running on Linux")
             json_file=os.path.join(os.path.expanduser("~"), ".config/InkyPi-Weather/secrets.json")
+        else:
+            print("Unsupported platform")
 
         try:
             with open(json_file) as f:

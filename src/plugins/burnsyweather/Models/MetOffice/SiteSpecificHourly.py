@@ -54,17 +54,28 @@ class TimeSeries:
         return TimeSeries(_time, _screenTemperature, _maxScreenAirTemp, _minScreenAirTemp, _screenDewPointTemperature, _feelsLikeTemperature, _windSpeed10m, _windDirectionFrom10m, _windGustSpeed10m, _max10mWindGust, _visibility, _screenRelativeHumidity, _mslp, _uvIndex, _significantWeatherCode, _precipitationRate, _totalPrecipAmount, _totalSnowAmount, _probOfPrecipitation)
 
 @dataclass
+class Location:
+    name: str
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Location':
+        _name = str(obj.get("name"))
+        return Location(_name)
+
+@dataclass
 class Properties:
+    location: Location
     requestPointDistance: float
     modelRunDate: str
     timeSeries: List[TimeSeries]
 
     @staticmethod
     def from_dict(obj: Any) -> 'Properties':
+        _location = Location.from_dict(obj.get("location"))
         _requestPointDistance = float(obj.get("requestPointDistance"))
         _modelRunDate = str(obj.get("modelRunDate"))
         _timeSeries = [TimeSeries.from_dict(y) for y in obj.get("timeSeries")]
-        return Properties(_requestPointDistance, _modelRunDate, _timeSeries)
+        return Properties(_location, _requestPointDistance, _modelRunDate, _timeSeries)
 
 
 @dataclass

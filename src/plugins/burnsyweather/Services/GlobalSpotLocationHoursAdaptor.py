@@ -33,6 +33,9 @@ class GlobalSpotLocationHoursAdaptor:
         model_run_date = weather_data.features[0].properties.modelRunDate
         global_spot_location_hours["model_run_time"] = model_run_date
 
+        location_name = weather_data.features[0].properties.location.name
+        global_spot_location_hours["location_of_forecast"] = location_name
+
         hour_one_weather_symbol = os.path.join(icons_path, f'{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
         global_spot_location_hours["hour_one_weather_symbol"] = hour_one_weather_symbol
 

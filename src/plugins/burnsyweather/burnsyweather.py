@@ -59,7 +59,7 @@ class BurnsyWeather(BasePlugin):
             global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(icons_path, lat, long)
             global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(icons_path, lat, long)
             observation_params = ObservationAdaptor().get_observation_params(lat, long)
-            location_params = self.get_city_from_coords(lat, long)
+            #location_params = self.get_city_from_coords(lat, long)
 
         except Exception as e:
             logger.error("Error getting weather content: %s", e)
@@ -71,7 +71,7 @@ class BurnsyWeather(BasePlugin):
             global_spot_location_hours
             | global_spot_location_daily
             | observation_params
-            | location_params
+            #| location_params
         )
 
         return image_template_params 

@@ -40,6 +40,9 @@ class WeatherGetter:
         print("Getting value from JSON")
 
         json_file=os.path.join(os.getenv('APPDATA'), "Python\\Secrets\\InkyPi-Weather\\secrets.json")
+        if json_file is None or not os.path.exists(json_file):
+            json_file=os.path.join(os.path.expanduser("~"), ".config/InkyPi-Weather/secrets.json")
+
 
         try:
             with open(json_file) as f:

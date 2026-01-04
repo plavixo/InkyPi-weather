@@ -82,13 +82,13 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 .row.bottom{margin-top:-2px}
 
 .panel{background:var(--panel-bg);padding:10px;border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
-.panel-title{font-weight:700;font-size:16px;margin:0}
+/*.panel-title{font-weight:bold;font-size:14px;margin:0;text-align:right}*/
 .panel-body{font-size:14px;line-height:1.2;color:var(--fg);overflow:hidden}
-.panel-body.small{font-size:12px;color:var(--muted);overflow:hidden}
+.panel-body.small{font-size:12px;color:black;overflow:hidden}
 
 .panel-body.small .body-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .panel-body.small .body-left{display:flex;flex-direction:column;justify-content:space-between;min-width:64px}
-.panel-body.small .body-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:12px;color:var(--muted);text-align:right;min-width:80px}
+.panel-body.small .body-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:12px;color:black;text-align:right;min-width:80px}
 .panel-body.small .body-right .observation-datetime{font-weight:700;color:var(--fg);font-size:12px}
 .panel-body.small .body-right div{line-height:1}
 
@@ -104,7 +104,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 /* Left panel split: top row image + location, then details */
 .left-top{display:flex;gap:8px;align-items:center;margin-bottom:8px}
 .left-top-img img{width:160px;height:auto;object-fit:contain;max-width:100%}
-.left-top-title .panel-title{font-size:30px;margin:0;text-align:right}
+.left-top-title{font-weight:bold;font-size:14px;margin:0;text-align:right}
 
 /* Forecast table styling */
 .forecast-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
@@ -122,9 +122,9 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 .daily-table thead th{font-size:13px;font-weight:700}
 .daily-symbol img{width:48px;height:auto}
 .big-temp{font-size:26px;font-weight:800}
-.small-temp{font-size:14px;color:var(--muted)}
+.small-temp{font-size:14px;color:black}
 .deg{font-size:0.7em;vertical-align:super;margin-left:2px}
-.daily-temp.min{font-size:14px;font-weight:600;color:var(--muted)}
+.daily-temp.min{font-size:14px;font-weight:600;color:black}
 .daily-temp.max{font-size:20px}
 
 /* divider color */
@@ -144,5 +144,5 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 
 /* visibility + humidity stacked */
 .panel-body.small .body-left-bottom{display:flex;flex-direction:column;align-items:center;gap:4px}
-.panel-body.small .observation-visibility{font-size:12px;color:var(--muted)}
-.panel-body.small .observation-humidity{font-size:12px;color:var(--muted)}
+.panel-body.small .observation-visibility{font-size:12px;color:black}
+.panel-body.small .observation-humidity{font-size:12px;color:black}

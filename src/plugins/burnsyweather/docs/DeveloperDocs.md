@@ -9,6 +9,8 @@ Change line 116 of image_utils.py from
 to
 "..\chrome-headless-shell-win64\chrome-headless-shell.exe",
 
+Do not commit this file.
+
 # Code Map
 ![](./img/codemap.drawio.png)
 

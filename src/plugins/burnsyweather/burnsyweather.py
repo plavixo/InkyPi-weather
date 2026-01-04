@@ -59,7 +59,7 @@ class BurnsyWeather(BasePlugin):
 
         # Adapt Weather Data
         global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(weather_data_hourly, self.get_plugin_dir())
-        global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(weather_data_daily, self.get_plugin_dir())
+        global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(weather_data_daily, self.get_plugin_dir(), lat, long)
         observation_params = ObservationAdaptor().get_observation_params(lat, long)
 
         # Prepare Additional Params

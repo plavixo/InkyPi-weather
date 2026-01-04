@@ -31,8 +31,8 @@
         "active_playlist": null
     },
     "refresh_info": {
-        "refresh_time": "2026-01-04T14:26:27.446998+00:00",
-        "image_hash": "9efd2608587b19adc0573b189cbba89f65d86f2a3e1a483d573828193a58153d",
+        "refresh_time": "2026-01-04T14:36:43.457227+00:00",
+        "image_hash": "d01acb8d5f89b2906e6841f694db904aa503918ebe4dbb19b4f56a7b007f6fe4",
         "refresh_type": "Manual Update",
         "plugin_id": "burnsyweather"
     }

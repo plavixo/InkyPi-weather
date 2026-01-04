@@ -1,6 +1,5 @@
 from plugins.base_plugin.base_plugin import BasePlugin
 from utils.app_utils import resolve_path
-from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
 from plugins.burnsyweather.Services.GlobalSpotLocationHoursAdaptor import GlobalSpotLocationHoursAdaptor
 from plugins.burnsyweather.Services.GlobalSpotLocationDailyAdaptor import GlobalSpotLocationDailyAdaptor
 from plugins.burnsyweather.Services.ObservationAdaptor import ObservationAdaptor
@@ -29,39 +28,26 @@ class BurnsyWeather(BasePlugin):
         
         image = self.render_image(dimensions, "burnsyweather.html", "burnsyweather.css", image_template_params)
 
-        return image
-
-    
+        return image    
 
     def create_weather_tokens(self, settings):
         # Get Weather Data - this bit may move into the Adaptors
         lat = float(settings.get('latitude'))
         long = float(settings.get('longitude'))
+        if not lat or not long:
+            raise RuntimeError("Latitude and Longitude are required.")
         try: 
-            
-            if not lat or not long:
-                raise RuntimeError("Latitude and Longitude are required.")
-            
-            weather_getter = WeatherGetter()
-
-            raw_weather_data_hourly =  weather_getter.get_content(lat, long, "hourly")
-            jsonstring = json.loads(raw_weather_data_hourly)
-            weather_data_hourly = HourlyRoot.from_dict(jsonstring)
-
-
+            # Adapt Weather Data
+            global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(self.get_plugin_dir(), lat, long)
+            global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(self.get_plugin_dir(), lat, long)
+            observation_params = ObservationAdaptor().get_observation_params(lat, long)
 
         except Exception as e:
             logger.error("Error getting weather content: %s", e)
             raise RuntimeError("Error retrieving weather data, please check logs.")
-
-        # Adapt Weather Data
-        global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(self.get_plugin_dir(), lat, long)
-        global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(self.get_plugin_dir(), lat, long)
-        observation_params = ObservationAdaptor().get_observation_params(lat, long)
-
+        
         # Prepare Additional Params
         standard_params = self.prepare_standard_params(settings)
-
         location_params = {
             "location_of_forecast": self.get_city_from_coords(lat, long)
         }

@@ -48,9 +48,6 @@ class BurnsyWeather(BasePlugin):
             jsonstring = json.loads(raw_weather_data_hourly)
             weather_data_hourly = HourlyRoot.from_dict(jsonstring)
 
-            raw_weather_data_daily =  weather_getter.get_content(lat, long, "daily")
-            jsonstring_daily = json.loads(raw_weather_data_daily)
-            weather_data_daily = DailyRoot.from_dict(jsonstring_daily)
 
 
         except Exception as e:
@@ -58,7 +55,7 @@ class BurnsyWeather(BasePlugin):
             raise RuntimeError("Error retrieving weather data, please check logs.")
 
         # Adapt Weather Data
-        global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(weather_data_hourly, self.get_plugin_dir())
+        global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(self.get_plugin_dir(), lat, long)
         global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(self.get_plugin_dir(), lat, long)
         observation_params = ObservationAdaptor().get_observation_params(lat, long)
 

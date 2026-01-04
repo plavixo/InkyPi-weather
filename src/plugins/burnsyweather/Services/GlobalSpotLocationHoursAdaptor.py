@@ -1,8 +1,19 @@
 from datetime import datetime
+import json
 import os
 
+from plugins.burnsyweather.Models.MetOffice.SiteSpecificHourly import HourlyRoot
+from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
+
 class GlobalSpotLocationHoursAdaptor:
-    def get_spot_hourly_forecast(self, weather_data, plugin_dir):     
+    def get_spot_hourly_forecast(self, plugin_dir, lat, long):     
+
+
+        weather_getter = WeatherGetter()
+
+        raw_weather_data_hourly =  weather_getter.get_content(lat, long, "hourly")
+        jsonstring = json.loads(raw_weather_data_hourly)
+        weather_data = HourlyRoot.from_dict(jsonstring)
         
         timed_series = weather_data.features[0].properties.timeSeries
 

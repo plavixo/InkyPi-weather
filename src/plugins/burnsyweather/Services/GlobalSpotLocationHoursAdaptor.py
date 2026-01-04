@@ -6,9 +6,7 @@ from plugins.burnsyweather.Models.MetOffice.SiteSpecificHourly import HourlyRoot
 from plugins.burnsyweather.Services.WeatherGetter import WeatherGetter
 
 class GlobalSpotLocationHoursAdaptor:
-    def get_spot_hourly_forecast(self, plugin_dir, lat, long):     
-
-
+    def get_spot_hourly_forecast(self, icons_path, lat, long):     
         weather_getter = WeatherGetter()
 
         raw_weather_data_hourly =  weather_getter.get_content(lat, long, "hourly")
@@ -20,7 +18,7 @@ class GlobalSpotLocationHoursAdaptor:
         global_spot_location_hours = {}
         
         for i in range(12):
-            global_spot_location_hours[f"hour_{i+1}_weather_symbol"] = os.path.join(plugin_dir, 'icons', 'old', f'{timed_series[i].significantWeatherCode}.svg')
+            global_spot_location_hours[f"hour_{i+1}_weather_symbol"] = os.path.join(icons_path, f'{timed_series[i].significantWeatherCode}.svg')
             global_spot_location_hours[f"hour_{i+1}_time"] = (datetime.fromisoformat(timed_series[i].time)).strftime('%H:%M')
             global_spot_location_hours[f"hour_{i+1}_precip"] = str(timed_series[i].probOfPrecipitation) + '%'
             global_spot_location_hours[f"hour_{i+1}_temp"] = str(round(timed_series[i].screenTemperature)) + '°C'
@@ -30,16 +28,12 @@ class GlobalSpotLocationHoursAdaptor:
             global_spot_location_hours[f"hour_{i+1}_visibility"] = timed_series[i].visibility
             global_spot_location_hours[f"hour_{i+1}_humidity"] = str(round(timed_series[i].screenRelativeHumidity)) + '%'
             global_spot_location_hours[f"hour_{i+1}_uv"] = timed_series[i].uvIndex
-        
-        
-        
-        icon_set = 'old'
-        hour_one_weather_symbol = os.path.join(plugin_dir, f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
-
+ 
+        # Special items
         model_run_date = weather_data.features[0].properties.modelRunDate
-
         global_spot_location_hours["model_run_time"] = model_run_date
+
+        hour_one_weather_symbol = os.path.join(icons_path, f'{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
         global_spot_location_hours["hour_one_weather_symbol"] = hour_one_weather_symbol
 
-       
         return global_spot_location_hours

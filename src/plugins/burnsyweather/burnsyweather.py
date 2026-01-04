@@ -31,16 +31,18 @@ class BurnsyWeather(BasePlugin):
         return image    
 
     def create_weather_tokens(self, settings):
-        # Get Weather Data - this bit may move into the Adaptors
         lat = float(settings.get('latitude'))
         long = float(settings.get('longitude'))
         if not lat or not long:
             raise RuntimeError("Latitude and Longitude are required.")
+        
+        icons_path = os.path.join(self.get_plugin_dir(), 'icons', 'old')
+        
         try: 
-            # Adapt Weather Data
-            global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(self.get_plugin_dir(), lat, long)
-            global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(self.get_plugin_dir(), lat, long)
+            global_spot_location_hours = GlobalSpotLocationHoursAdaptor().get_spot_hourly_forecast(icons_path, lat, long)
+            global_spot_location_daily = GlobalSpotLocationDailyAdaptor().get_spot_daily_forecast(icons_path, lat, long)
             observation_params = ObservationAdaptor().get_observation_params(lat, long)
+            location_params = self.get_city_from_coords(lat, long)
 
         except Exception as e:
             logger.error("Error getting weather content: %s", e)
@@ -48,9 +50,6 @@ class BurnsyWeather(BasePlugin):
         
         # Prepare Additional Params
         standard_params = self.prepare_standard_params(settings)
-        location_params = {
-            "location_of_forecast": self.get_city_from_coords(lat, long)
-        }
 
         # Combine Params
         image_template_params = (
@@ -89,14 +88,18 @@ class BurnsyWeather(BasePlugin):
             for key in ("city", "town", "village", "hamlet", "municipality"):
                 name = addr.get(key)
                 if name:
-                    return name
-            # Fallback to broader area (county/state/country)
-            for key in ("county", "state", "country"):
-                name = addr.get(key)
-                if name:
-                    return name
-            # No suitable name found; keep coords as text
-            return location_of_forecast
+                    location_of_forecast = name
+                    break
+                else:
+                    # Fallback to broader area (county/state/country)
+                    for key in ("county", "state", "country"):
+                        name = addr.get(key)
+                        if name:
+                            location_of_forecast = name
         except Exception as e:
             logger.warning("Reverse geocode failed: %s", e)
-            return location_of_forecast
+        
+        location_params = {
+            "location_of_forecast": location_of_forecast
+        }
+        return location_params

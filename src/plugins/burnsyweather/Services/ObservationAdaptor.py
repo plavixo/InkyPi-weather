@@ -3,18 +3,21 @@ import requests
 import json
 
 from plugins.burnsyweather.Models.MetOffice.Observations import Observations
-
-
-
+from plugins.burnsyweather.Services.SecretGetter import SecretGetter
 
 class ObservationAdaptor:
     base_url = "https://data.hub.api.metoffice.gov.uk/observation-land/1"
-    def get_observation_params(self,latitude, longitude):
-        geohash=self.retrieve_cached_geohash(latitude, longitude)
+    
+    def get_observation_params(self, latitude, longitude):
+
+        secretGetter = SecretGetter()
+        api_key = secretGetter.get_secret("MetOffice", "ObservationsAPIKey")
+
+        geohash = self.retrieve_geohash(latitude, longitude, api_key)
+        geohash = self.retrieve_cached_geohash()
         print ("Geohash: ", geohash)
 
-        raw_observation_data = self.get_observations(geohash)
-
+        raw_observation_data = self.get_observations(geohash, api_key)
         # Write to file for debugging
         f = open("observations", "w")
         f.write(raw_observation_data)
@@ -38,19 +41,19 @@ class ObservationAdaptor:
         }
         return params
 
-    def get_observations(self, geohash):
+    def get_observations(self, geohash, api_key):
         endpoint = f"/{geohash}"
         params = {}
 
-        rawObservations = self.make_request(endpoint, params)
+        rawObservations = self.make_request(endpoint, params, api_key)
         print("Raw Observations: ", rawObservations)
         return rawObservations
     
 
-    def retrieve_cached_geohash(self, latitude, longitude):
+    def retrieve_cached_geohash(self):
         return "gcnfur"
-    
-    def retrieve_geohash(self, latitude, longitude):
+
+    def retrieve_geohash(self, latitude, longitude, api_key):
 
         truncated_latitude = f"{latitude:.2f}"
         truncated_longitude = f"{longitude:.2f}"
@@ -61,16 +64,14 @@ class ObservationAdaptor:
 
         endpoint = "/nearest"
 
-        rawGeohash = self.make_request(endpoint, params)
+        rawGeohash = self.make_request(endpoint, params, api_key)
         jsonstring = json.loads(rawGeohash)
         geohash = jsonstring[0]['geohash']
         return geohash
 
-    def make_request(self, endpoint, params):
+    def make_request(self, endpoint, params, api_key):
     
         url = self.base_url + endpoint
-        
-        api_key = self.get_secret("MetOffice", "ObservationsAPIKey")
         
         requestHeaders = {"apikey": api_key}
         headers = {'accept': "application/json"}
@@ -97,19 +98,3 @@ class ObservationAdaptor:
         print(req.text)
 
         return req.text
-    
-    def get_secret(self, key, sub_key):
-        # TODO: Change this to get from static file location which will work with the Pi
-
-        print("Getting value from JSON")
-
-        json_file=os.path.join(os.getenv('APPDATA'), "Python\\Secrets\\InkyPi-Weather\\secrets.json")
-
-        try:
-            with open(json_file) as f:
-                data = json.load(f)
-                thing = data[key][sub_key]
-                print("Found value:")
-                return thing
-        except Exception as e:
-            print("Error Getting Secrets: ", e)

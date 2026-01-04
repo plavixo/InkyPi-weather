@@ -35,14 +35,14 @@ class BurnsyWeather(BasePlugin):
 
     def create_weather_tokens(self, settings):
         # Get Weather Data - this bit may move into the Adaptors
+        lat = float(settings.get('latitude'))
+        long = float(settings.get('longitude'))
         try: 
-            lat = float(settings.get('latitude'))
-            long = float(settings.get('longitude'))
+            
             if not lat or not long:
                 raise RuntimeError("Latitude and Longitude are required.")
             
             weather_getter = WeatherGetter()
-
 
             raw_weather_data_hourly =  weather_getter.get_content(lat, long, "hourly")
             jsonstring = json.loads(raw_weather_data_hourly)
@@ -62,32 +62,42 @@ class BurnsyWeather(BasePlugin):
         # Prepare Additional Params
         standard_params = self.prepare_standard_params(settings, weather_data_hourly)
 
+        location_params = {
+            "location_of_forecast": self.get_city_from_coords(lat, long)
+        }
+
         # Combine Params
-        image_template_params = standard_params | global_spot_location_hours | global_spot_location_daily | observation_params
+        image_template_params = (
+            standard_params
+            | global_spot_location_hours
+            | global_spot_location_daily
+            | observation_params
+            | location_params
+        )
 
         return image_template_params 
 
 
     def prepare_standard_params(self, settings, weather_data):
+        set1 = {
+            "title": 'MetOffice Weather',
+            "plugin_settings": settings,
+            "met_office_logo": self.get_plugin_dir('icons/Met_Office.png')
+        }
+
         icon_set = 'old'
         hour_one_weather_symbol = self.get_plugin_dir(f'icons/{icon_set}/{weather_data.features[0].properties.timeSeries[0].significantWeatherCode}.svg')
-        coords = weather_data.features[0].geometry.coordinates
-        lon = float(coords[0])
-        lat = float(coords[1])
-
-        location_of_forecast = self.get_city_from_coords(lat, lon)
 
         model_run_date = weather_data.features[0].properties.modelRunDate
         
-        basic_params = {
-            "title": 'MetOffice Weather',
-            "location_of_forecast": location_of_forecast,
-            "model_run_time": model_run_date,
-            "hour_one_weather_symbol": hour_one_weather_symbol,
-            "met_office_logo": self.get_plugin_dir('icons/Met_Office.png'),
-            "plugin_settings": settings
-        }
         
+        set2 = {
+            "model_run_time": model_run_date,
+            "hour_one_weather_symbol": hour_one_weather_symbol
+        }
+
+        basic_params = set1 | set2
+
         return basic_params
     
     def get_city_from_coords(self, lat, lon):

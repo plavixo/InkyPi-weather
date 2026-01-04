@@ -3,6 +3,12 @@
 Remember to manually attach the debugger.  
 `python -m debugpy --listen localhost:8080 src/inkypi.py --dev`
 
+# Changing chromium-headless-shell path for Windows 
+Change line 116 of image_utils.py from
+"chromium-headless-shell",
+to
+"..\chrome-headless-shell-win64\chrome-headless-shell.exe",
+
 # Code Map
 ![](./img/codemap.drawio.png)
 

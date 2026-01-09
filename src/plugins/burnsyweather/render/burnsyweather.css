@@ -124,7 +124,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 
 /* Summary panel table */
 .daily-table{width:100%;border-collapse:collapse;table-layout:fixed}
-.daily-table th,.daily-table td{padding:3px 5px;text-align:center;vertical-align:middle}
+.daily-table th,.daily-table td{padding:3px 3px;text-align:center;vertical-align:middle}
 /* Remove padding/margin specifically for the Max label row */
 .daily-table .temps-label-row .daily-temp-label{padding:0;margin:0}
 .daily-table thead th{font-size:13px;font-weight:700}

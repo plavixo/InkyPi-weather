@@ -24,7 +24,13 @@ class GlobalSpotLocationHoursAdaptor:
             global_spot_location_hours[f"hour_{i+1}_temp"] = str(round(timed_series[i].screenTemperature)) + '°C'
             global_spot_location_hours[f"hour_{i+1}_feels"] = str(round(timed_series[i].feelsLikeTemperature)) + '°C'
             global_spot_location_hours[f"hour_{i+1}_wind_dir"] = timed_series[i].windDirectionFrom10m
-            global_spot_location_hours[f"hour_{i+1}_wind_gust"] = round(timed_series[i].windGustSpeed10m)
+            # include wind speed/gust converted to mph (rounded)
+            _ws_ms = timed_series[i].windSpeed10m
+            _gust_ms = timed_series[i].windGustSpeed10m
+            _ws_mph = int(round(_ws_ms * 2.236936)) if _ws_ms is not None else 0
+            _gust_mph = int(round(_gust_ms * 2.236936)) if _gust_ms is not None else 0
+            global_spot_location_hours[f"hour_{i+1}_wind_speed"] = f"{_ws_mph}"
+            global_spot_location_hours[f"hour_{i+1}_wind_gust"] = f"{_gust_mph}"
             global_spot_location_hours[f"hour_{i+1}_visibility"] = timed_series[i].visibility
             global_spot_location_hours[f"hour_{i+1}_humidity"] = str(round(timed_series[i].screenRelativeHumidity)) + '%'
             global_spot_location_hours[f"hour_{i+1}_uv"] = timed_series[i].uvIndex

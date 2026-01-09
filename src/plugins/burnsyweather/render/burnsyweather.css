@@ -102,17 +102,23 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 .text-center{text-align:center}
 
 /* Left panel split: top row image + location, then details */
-.left-top{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.left-top{display:flex;gap:8px;align-items:center;margin-bottom:4px}
 .left-top-img img{width:160px;height:auto;object-fit:contain;max-width:100%}
 .left-top-title{font-weight:bold;font-size:14px;margin:0;text-align:right}
+.left-top-title .location-of-forecast{font-size:28px;font-weight:700;text-align:right;padding-top:0}
 
 /* Forecast table styling */
 .forecast-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
-.forecast-table thead th{background:transparent;font-weight:600;padding:6px 8px;text-align:center}
 .forecast-table th,.forecast-table td{border:none;padding:6px 8px;overflow:hidden;white-space:nowrap}
+/* Reduce vertical padding on hour header cells - more specific selector to ensure it overrides */
+.panel.full .forecast-table thead th{background:transparent;font-weight:600;padding-top:3px !important;padding-bottom:3px !important;padding-left:8px !important;padding-right:8px !important;line-height:1;text-align:center}
 .forecast-table th:first-child,.forecast-table td:first-child{text-align:left;width:140px;padding-left:4px}
 .forecast-table td{text-align:center}
 .forecast-table img{width:36px;height:auto}
+.wind-arrow{vertical-align:middle;display:inline-block;margin-right:2px}
+/* Make wind arrow specifically smaller inside forecast table (higher specificity than .forecast-table img) */
+.forecast-table img.wind-arrow{width:11px;height:auto;margin-right:2px}
+.wind-deg{font-size:12px;color:black;margin-left:4px}
 .forecast-table thead th{font-size:13px}
 .forecast-table tbody th{font-weight:600;text-align:left;padding-right:10px}
 

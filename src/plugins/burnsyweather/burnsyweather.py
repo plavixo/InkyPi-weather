@@ -41,7 +41,8 @@ class BurnsyWeather(BasePlugin):
         basic_params = {
             "title": 'MetOffice Weather',
             "plugin_settings": settings,
-            "met_office_logo": self.get_plugin_dir('icons/Met_Office.png')
+            "met_office_logo": self.get_plugin_dir('icons/Met_Office.png'),
+            "wind_arrow_icon": self.get_plugin_dir('icons/wind/wind-n-arrow.svg')
         }
         
         # Render the image

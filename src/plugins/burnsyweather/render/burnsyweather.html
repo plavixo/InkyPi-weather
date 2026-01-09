@@ -10,7 +10,7 @@
             <img src="{{ met_office_logo }}">
           </div>
           <div class="left-top-title">
-            <div>{{ location_of_forecast | default("Location of Forecast") }}</div>
+            <div class="location-of-forecast">{{ location_of_forecast | default("Location of Forecast") }}</div>
           </div>
         </div>
 
@@ -111,22 +111,6 @@
             </tr>
 
             <tr>
-              <th>Chance of Precip</th>
-              <td>{{ hour_1_precip }}</td>
-              <td>{{ hour_2_precip }}</td>
-              <td>{{ hour_3_precip }}</td>
-              <td>{{ hour_4_precip }}</td>
-              <td>{{ hour_5_precip }}</td>
-              <td>{{ hour_6_precip }}</td>
-              <td>{{ hour_7_precip }}</td>
-              <td>{{ hour_8_precip }}</td>
-              <td>{{ hour_9_precip }}</td>
-              <td>{{ hour_10_precip }}</td>
-              <td>{{ hour_11_precip }}</td>
-              <td>{{ hour_12_precip }}</td>
-            </tr>
-
-            <tr>
               <th>Temp</th>
               <td>{{ hour_1_temp }}</td>
               <td>{{ hour_2_temp }}</td>
@@ -159,19 +143,35 @@
             </tr>
 
             <tr>
-              <th>Wind Dir</th>
-              <td>{{ hour_1_wind_dir }}</td>
-              <td>{{ hour_2_wind_dir }}</td>
-              <td>{{ hour_3_wind_dir }}</td>
-              <td>{{ hour_4_wind_dir }}</td>
-              <td>{{ hour_5_wind_dir }}</td>
-              <td>{{ hour_6_wind_dir }}</td>
-              <td>{{ hour_7_wind_dir }}</td>
-              <td>{{ hour_8_wind_dir }}</td>
-              <td>{{ hour_9_wind_dir }}</td>
-              <td>{{ hour_10_wind_dir }}</td>
-              <td>{{ hour_11_wind_dir }}</td>
-              <td>{{ hour_12_wind_dir }}</td>
+              <th>Chance of Precip</th>
+              <td>{{ hour_1_precip }}</td>
+              <td>{{ hour_2_precip }}</td>
+              <td>{{ hour_3_precip }}</td>
+              <td>{{ hour_4_precip }}</td>
+              <td>{{ hour_5_precip }}</td>
+              <td>{{ hour_6_precip }}</td>
+              <td>{{ hour_7_precip }}</td>
+              <td>{{ hour_8_precip }}</td>
+              <td>{{ hour_9_precip }}</td>
+              <td>{{ hour_10_precip }}</td>
+              <td>{{ hour_11_precip }}</td>
+              <td>{{ hour_12_precip }}</td>
+            </tr>
+
+            <tr>
+              <th>Wind Speed</th>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_1_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_1_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_2_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_2_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_3_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_3_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_4_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_4_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_5_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_5_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_6_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_6_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_7_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_7_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_8_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_8_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_9_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_9_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_10_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_10_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_11_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_11_wind_speed }}</span></td>
+              <td class="wind-dir-cell"><img class="wind-arrow" src="{{ wind_arrow_icon }}" style="transform: rotate({{ hour_12_wind_dir }}deg);" alt=""> <span class="wind-deg">{{ hour_12_wind_speed }}</span></td>
             </tr>
 
             <tr>

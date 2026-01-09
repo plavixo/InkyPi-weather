@@ -32,7 +32,7 @@ class ObservationAdaptor:
             'observation_humidity': latest_entry.humidity,
             'observation_mslp': latest_entry.mslp,
             'observation_pressure_tendency': latest_entry.pressure_tendency,
-            'observation_temperature': latest_entry.temperature,
+            'observation_temperature': round(latest_entry.temperature),
             'observation_visibility': latest_entry.visibility,
             'observation_weather_code': latest_entry.weather_code,
             'observation_wind_direction': latest_entry.wind_direction,

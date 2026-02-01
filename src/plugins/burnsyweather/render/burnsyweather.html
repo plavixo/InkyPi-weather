@@ -1,6 +1,37 @@
 {% extends "plugin.html" %}
 
 {% block content %}
+{% macro vis_label(v) %}
+  {% if v is none %}
+    N/A
+  {% else %}
+    {% set n = v|float %}
+    {% if n < 1 %}
+      VP
+    {% elif n >= 1.1 and n <= 4 %}
+      P
+    {% elif n >= 4.1 and n <= 10 %}
+      M
+    {% elif n >= 10.1 and n <= 20 %}
+      G
+    {% elif n >= 20.1 and n <= 40 %}
+      VG
+    {% elif n > 40 %}
+      E
+    {% else %}
+      {{ v }}
+    {% endif %}
+  {% endif %}
+{% endmacro %}
+{% macro uv_label(v) %}
+  {% if v is none %}
+    N/A
+  {% elif v|int == 0 %}
+    -
+  {% else %}
+    {{ v }}
+  {% endif %}
+{% endmacro %}
 <div>
   <div class="screen">
     <div class="row top">
@@ -25,16 +56,16 @@
                 <div class="body-left-top-temp observation-temperature">{{ observation_temperature }}<span >°C</span></div>
               </div>
               <div class="body-left-bottom">
+                <div class="observation-pressure-tendency">Pressure Tendency: {{ observation_pressure_tendency }}</div>
                 <div class="observation-visibility">Visibility: {{ observation_visibility }}</div>
                 <div class="observation-humidity">Humidity: {{ observation_humidity }}%</div>
               </div>
             </div>
             <div class="body-right">
-              <div class="observation-datetime">{{ observation_datetime }}</div>
               <div class="observation-wind-direction">Wind Direction: {{ observation_wind_direction }}</div>
-              <div class="observation-wind-speed">Wind Speed: {{ observation_wind_speed }}</div>
-              <div class="observation-wind-gust">Wind Gust: {{ observation_wind_gust }}</div>
-              <div class="observation-pressure-tendency">Pressure Tendency: {{ observation_pressure_tendency }}</div>
+              <div class="observation-wind-speed">Wind Speed MPH: {{ observation_wind_speed }}</div>
+              <div class="observation-wind-gust">Wind Gust MPH: {{ observation_wind_gust }}</div>
+              <div class="observation-datetime">Observations as of {{ observation_datetime }}</div>
             </div>
           </div>
         </div>
@@ -200,18 +231,18 @@
 
             <tr>
               <th>Visibility</th>
-              <td>{{ hour_1_visibility }}</td>
-              <td>{{ hour_2_visibility }}</td>
-              <td>{{ hour_3_visibility }}</td>
-              <td>{{ hour_4_visibility }}</td>
-              <td>{{ hour_5_visibility }}</td>
-              <td>{{ hour_6_visibility }}</td>
-              <td>{{ hour_7_visibility }}</td>
-              <td>{{ hour_8_visibility }}</td>
-              <td>{{ hour_9_visibility }}</td>
-              <td>{{ hour_10_visibility }}</td>
-              <td>{{ hour_11_visibility }}</td>
-              <td>{{ hour_12_visibility }}</td>
+              <td>{{ vis_label(hour_1_visibility) }}</td>
+              <td>{{ vis_label(hour_2_visibility) }}</td>
+              <td>{{ vis_label(hour_3_visibility) }}</td>
+              <td>{{ vis_label(hour_4_visibility) }}</td>
+              <td>{{ vis_label(hour_5_visibility) }}</td>
+              <td>{{ vis_label(hour_6_visibility) }}</td>
+              <td>{{ vis_label(hour_7_visibility) }}</td>
+              <td>{{ vis_label(hour_8_visibility) }}</td>
+              <td>{{ vis_label(hour_9_visibility) }}</td>
+              <td>{{ vis_label(hour_10_visibility) }}</td>
+              <td>{{ vis_label(hour_11_visibility) }}</td>
+              <td>{{ vis_label(hour_12_visibility) }}</td>
             </tr>
 
             <tr>
@@ -232,18 +263,18 @@
 
             <tr>
               <th>UV</th>
-              <td>{{ hour_1_uv }}</td>
-              <td>{{ hour_2_uv }}</td>
-              <td>{{ hour_3_uv }}</td>
-              <td>{{ hour_4_uv }}</td>
-              <td>{{ hour_5_uv }}</td>
-              <td>{{ hour_6_uv }}</td>
-              <td>{{ hour_7_uv }}</td>
-              <td>{{ hour_8_uv }}</td>
-              <td>{{ hour_9_uv }}</td>
-              <td>{{ hour_10_uv }}</td>
-              <td>{{ hour_11_uv }}</td>
-              <td>{{ hour_12_uv }}</td>
+              <td>{{ uv_label(hour_1_uv) }}</td>
+              <td>{{ uv_label(hour_2_uv) }}</td>
+              <td>{{ uv_label(hour_3_uv) }}</td>
+              <td>{{ uv_label(hour_4_uv) }}</td>
+              <td>{{ uv_label(hour_5_uv) }}</td>
+              <td>{{ uv_label(hour_6_uv) }}</td>
+              <td>{{ uv_label(hour_7_uv) }}</td>
+              <td>{{ uv_label(hour_8_uv) }}</td>
+              <td>{{ uv_label(hour_9_uv) }}</td>
+              <td>{{ uv_label(hour_10_uv) }}</td>
+              <td>{{ uv_label(hour_11_uv) }}</td>
+              <td>{{ uv_label(hour_12_uv) }}</td>
             </tr>
 
           </tbody>

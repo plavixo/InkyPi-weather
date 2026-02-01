@@ -27,6 +27,10 @@ class ObservationAdaptor:
         observations = Observations.from_list(json.loads(raw_observation_data))
 
         latest_entry = observations[-1]
+        # Convert wind speed and gust from m/s to mph (1 m/s = 2.23694 mph)
+        wind_speed_mph = round(latest_entry.wind_speed * 2.23694) if latest_entry.wind_speed else 0
+        wind_gust_mph = round(latest_entry.wind_gust * 2.23694) if latest_entry.wind_gust else 0
+        
         params = {
             'observation_datetime': latest_entry.datetime,
             'observation_humidity': latest_entry.humidity,
@@ -36,8 +40,8 @@ class ObservationAdaptor:
             'observation_visibility': latest_entry.visibility,
             'observation_weather_code': latest_entry.weather_code,
             'observation_wind_direction': latest_entry.wind_direction,
-            'observation_wind_gust': latest_entry.wind_gust,
-            'observation_wind_speed': latest_entry.wind_speed
+            'observation_wind_gust': wind_gust_mph,
+            'observation_wind_speed': wind_speed_mph
         }
         return params
 

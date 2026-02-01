@@ -107,12 +107,11 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 
 /* Forecast table styling */
 .forecast-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px;font-weight:bolder}
-.forecast-table th,.forecast-table td{border:none;padding:6px 8px;overflow:hidden;white-space:nowrap}
+.forecast-table th,.forecast-table td{border:none;padding:4px 6px;overflow:hidden;white-space:nowrap;font-weight:600}
 /* Reduce vertical padding on hour header cells - more specific selector to ensure it overrides */
-.panel.full .forecast-table thead th{background:transparent;font-weight:600;padding-top:3px !important;padding-bottom:3px !important;padding-left:8px !important;padding-right:8px !important;line-height:1;text-align:center}
 .forecast-table th:first-child,.forecast-table td:first-child{text-align:left;width:140px;padding-left:4px}
 .forecast-table td{text-align:center}
-.forecast-table img{width:36px;height:auto}
+.forecast-table img{width:44px;height:auto}
 .wind-arrow{vertical-align:middle;display:inline-block;margin-right:2px}
 /* Make wind arrow specifically smaller inside forecast table (higher specificity than .forecast-table img) */
 .forecast-table img.wind-arrow{width:11px;height:auto;margin-right:2px}
@@ -126,9 +125,9 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 /* Remove padding/margin specifically for the Max label row */
 .daily-table .temps-label-row .daily-temp-label{padding:0;margin:0}
 .daily-table thead th{font-size:13px;font-weight:700}
-.daily-symbol img{width:48px;height:auto}
-.daily-day{font-size:16px;font-weight:700;text-align:center;margin-bottom:4px}
-.daily-temp-label{font-size:10px;font-weight:700;text-align:center;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+.daily-symbol img{width:56px;height:auto}
+.daily-day{font-size:16px;font-weight:700;text-align:center}
+.daily-temp-label{font-size:10px;font-weight:700;text-align:center;color:var(--muted);text-transform:uppercase}
 .big-temp{font-size:26px;font-weight:800}
 .small-temp{font-size:14px;color:black}
 .deg{font-size:0.7em;vertical-align:super;margin-left:2px}
@@ -146,7 +145,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:
 
 /* Left panel small body: split top into symbol + temperature horizontally */
 .panel-body.small .body-left-top{display:flex;flex-direction:row;align-items:center;gap:8px}
-.panel-body.small .body-left-top-symbol img{width:48px;height:auto;display:block}
+.panel-body.small .body-left-top-symbol img{width:56px;height:auto;display:block}
 .panel-body.small .body-left-top-temp{font-size:18px;font-weight:700;color:var(--fg)}
 .panel-body.small .observation-temperature{line-height:1}
 
